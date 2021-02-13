@@ -2,6 +2,8 @@ import 'react-native-gesture-handler';
 import HomeScreen from './src/HomeScreen';
 import ProfileScreen from './src/ProfileScreen';
 import WalkingScreen from './src/WalkingScreen';
+import LoginScreen from './src/LoginScreen';
+import RegisterScreen from './src/RegisterScreen'
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -41,6 +43,10 @@ function App() {
               <FontAwesomeIcon name='user' color={color} size={25} />
             ),
           }}
+        />
+        <Tab.Screen 
+          name='Login'
+          component={RegisterScreen}
         />
       </Tab.Navigator>
     </NavigationContainer>
