@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { Formik } from 'formik';
+import{ AuthContext } from './Navigation/AuthProvider'; 
 
-
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
+    const { login } = useContext(AuthContext);
     return (
         <View style={styles.container}>
             <Formik
                 initialValues={{ email: '', password: ''}}
                 onSubmit={(values) => {
-                    console.log(values)
+                    login(values.email, values.password)
                 }}
             >
                 {(props) => (
@@ -29,6 +30,7 @@ const LoginScreen = () => {
                                 style={styles.input_Text}
                                 placeholder='Password...'
                                 placeholderTextColor='#003f5c'
+                                secureTextEntry
                                 onChangeText={props.handleChange('password')}
                                 value={props.values.password}
                             />
@@ -36,7 +38,7 @@ const LoginScreen = () => {
                         <TouchableOpacity style={styles.login_Button} onPress={props.handleSubmit}>
                             <Text style={styles.login_text}> Login </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
                             <Text style={styles.signup_Text}> Sign up </Text>
                         </TouchableOpacity>
                     </View>
