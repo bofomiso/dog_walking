@@ -1,7 +1,20 @@
 import React, { useContext }from 'react';
 import { Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import { Formik } from 'formik';
+import { ErrorMessage, Formik } from 'formik';
 import { AuthContext } from './Navigation/AuthProvider';
+import * as yup from 'yup';
+
+const RegisterSchema = yup.object({
+    email: yup
+        .string()
+        .email('Please enter valid email')
+        .required('Email Address is required'),
+    password: yup
+        .string()
+        .min(6, ({ min }) => `Password must be at least ${min} characters`)
+        .required('Password is required')
+
+})
 
 const RegisterScreen = ({}) => {
     const { register } = useContext(AuthContext);
@@ -9,6 +22,7 @@ const RegisterScreen = ({}) => {
         <View style={styles.container}>
             <Formik
                 initialValues={{ email: '', password: ''}}
+                validationSchema={RegisterSchema}
                 onSubmit={(values) => {
                     register(values.email, values.password)
                 }}
@@ -25,6 +39,7 @@ const RegisterScreen = ({}) => {
                                 value={props.values.email}
                             />
                         </View>
+                        <Text style={styles.error_text}> {props.touched.email && props.errors.email} </Text>
                         <View style={styles.input}>
                             <TextInput
                                 style={styles.input_Text}
@@ -35,6 +50,7 @@ const RegisterScreen = ({}) => {
                                 value={props.values.password}
                             />
                         </View>
+                        <Text style={styles.error_text}> {props.touched.password && props.errors.password} </Text>
                         <TouchableOpacity style={styles.login_Button}  onPress={props.handleSubmit}>
                             <Text style={styles.login_text}> Sign up </Text>
                         </TouchableOpacity>
@@ -61,7 +77,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#D1D8Df',
         borderRadius: 25,
         height: 50,
-        marginBottom: 20,
+        marginBottom: 10,
+        marginTop: 10,
         justifyContent: 'center',
         padding: 20
     },
@@ -82,7 +99,12 @@ const styles = StyleSheet.create({
     login_text: {
         color: 'white',
         fontSize: 16
+    },
+    error_text: {
+        color: 'red',
+        fontSize: 13,
     }
+
 });
 
 export default RegisterScreen;
