@@ -1,6 +1,6 @@
 import React, { useContext }from 'react';
-import { Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import { ErrorMessage, Formik } from 'formik';
+import { Text, View, StyleSheet, TextInput, TouchableOpacity, Button } from 'react-native';
+import { Formik } from 'formik';
 import { AuthContext } from './Navigation/AuthProvider';
 import * as yup from 'yup';
 
@@ -13,10 +13,9 @@ const RegisterSchema = yup.object({
         .string()
         .min(6, ({ min }) => `Password must be at least ${min} characters`)
         .required('Password is required')
-
 })
 
-const RegisterScreen = ({}) => {
+const RegisterScreen = ({navigation}) => {
     const { register } = useContext(AuthContext);
     return (
         <View style={styles.container}>
@@ -37,6 +36,7 @@ const RegisterScreen = ({}) => {
                                 placeholderTextColor='#003f5c'
                                 onChangeText={props.handleChange('email')}
                                 value={props.values.email}
+                                onBlur={props.handleBlur('email')}
                             />
                         </View>
                         <Text style={styles.error_text}> {props.touched.email && props.errors.email} </Text>
@@ -48,11 +48,15 @@ const RegisterScreen = ({}) => {
                                 secureTextEntry
                                 onChangeText={props.handleChange('password')}
                                 value={props.values.password}
+                                onBlur={props.handleBlur('password')}
                             />
                         </View>
                         <Text style={styles.error_text}> {props.touched.password && props.errors.password} </Text>
                         <TouchableOpacity style={styles.login_Button}  onPress={props.handleSubmit}>
                             <Text style={styles.login_text}> Sign up </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                            <Text style={styles.error_text}> Already signed up? Log in </Text>
                         </TouchableOpacity>
                     </View>
                 )}
@@ -90,10 +94,10 @@ const styles = StyleSheet.create({
         width: 330,
         backgroundColor: '#2e71b8',
         borderRadius: 25,
-        height:50,
+        height: 50,
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 30,
+        marginTop: 20,
         marginBottom: 10,
     },
     login_text: {
@@ -102,9 +106,8 @@ const styles = StyleSheet.create({
     },
     error_text: {
         color: 'red',
-        fontSize: 13,
+        fontSize: 16,
     }
-
 });
 
 export default RegisterScreen;

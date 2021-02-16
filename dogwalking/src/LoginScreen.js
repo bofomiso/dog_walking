@@ -98,10 +98,10 @@ const styles = StyleSheet.create({
         width: 330,
         backgroundColor: '#2e71b8',
         borderRadius: 25,
-        height:50,
+        height: 50,
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 30,
+        marginTop: 20,
         marginBottom: 10,
     },
     login_text: {
