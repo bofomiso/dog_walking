@@ -21,7 +21,9 @@ export const AuthProvider = ({ children }) => {
                     try {
                         await auth().createUserWithEmailAndPassword(email, password);
                     } catch(e) {
-                        console.log(e);
+                        if(e.code === 'auth/email-already-in-use') {
+                            console.log('That email address is already in use!');
+                        }
                     }
                 },
                 logout: async() => {
