@@ -1,22 +1,21 @@
 import React from "react";
 import { createNativeStackNavigator } from "react-native-screens/native-stack";
-import LoginScreen from "../Screens/LoginScreen";
-import RegisterScreen from "../Screens/RegisterScreen";
+import HomeScreen from "../Screens/HomeScreen";
+import AddDogScreen from "../Screens/AddDogScreen";
 
 const Stack = createNativeStackNavigator();
 
-export default function AuthStack() {
+export default function HomeStack() {
   return (
     <Stack.Navigator initialRouteName="Login">
       <Stack.Screen
-        name="Login"
-        component={LoginScreen}
+        name="Home"
+        component={HomeScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Register"
-        component={RegisterScreen}
-        options={{ headerShown: false }}
+        name="Add Dog"
+        component={AddDogScreen}
       />
     </Stack.Navigator>
   );
