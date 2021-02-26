@@ -10,7 +10,12 @@ const Tab = createBottomTabNavigator();
 
 export default function BottomBarStack() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      initialRouteName="Home"
+      tabBarOptions={{
+         keyboardHidesTabBar: true
+      }}
+    >
       <Tab.Screen
         name="Home"
         component={HomeStack}

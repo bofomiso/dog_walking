@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "677389894123",
+    "project_id": "dog-walking-625cd",
+    "storage_bucket": "dog-walking-625cd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:677389894123:android:62f048adf56b7f081c59ae",
+        "android_client_info": {
+          "package_name": "com.dogwalking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "677389894123-9n4272a1jl011pqt05in5738pabbuu23.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dogwalking",
+            "certificate_hash": "85b0b2dd16d6a087874fc65a368a9aeaa809d7f3"
+          }
+        },
+        {
+          "client_id": "677389894123-6avqjlg0sjupba74nb4pnifseum1es8m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNI0mb4suoFqiFEvBMe7AC-px63XLltiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "677389894123-6avqjlg0sjupba74nb4pnifseum1es8m.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "677389894123-e062sh9090bqlh90pbu1dbqbetj8bfju.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.dogwalking"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
