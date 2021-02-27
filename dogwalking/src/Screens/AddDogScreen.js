@@ -9,13 +9,27 @@ import {
   Keyboard
 } from "react-native";
 import { Formik } from "formik";
+import * as yup from "yup";
 import DogImagePicker from "../components/DogImagePicker";
+
+const AddSchema = yup.object({
+  name: yup
+    .string()
+    .required("name is required"),
+  age: yup
+    .number()
+    .required("age is required"),
+  breed: yup
+    .string()
+    .required("What breed is your dog?")
+})
 
 const AddDogScreen = () => {
   return (
     <View style={styles.container}>
       <Formik
         initialValues={{ name: "", age: "", breed: "" }}
+        validationSchema={AddSchema}
         onSubmit={values => console.log(values)}
       >
         {(props) => (
@@ -34,6 +48,7 @@ const AddDogScreen = () => {
                   onBlur={props.handleBlur("name")}
                 />
               </View>
+              <Text style={styles.errorText}> {props.touched.name && props.errors.name} </Text>
               <View style={styles.input}>
                 <TextInput
                   style={styles.inputText}
@@ -42,8 +57,10 @@ const AddDogScreen = () => {
                   onChangeText={props.handleChange("age")}
                   value={props.values.age}
                   onBlur={props.handleBlur("age")}
+                  keyboardType="numeric"
                 />
               </View>
+              <Text style={styles.errorText}> {props.touched.age && props.errors.age} </Text>
               <View style={styles.input}>
                 <TextInput
                   style={styles.inputText}
@@ -54,6 +71,7 @@ const AddDogScreen = () => {
                   onBlur={props.handleBlur("breed")}
                 />
               </View>
+              <Text style={styles.errorText}> {props.touched.breed && props.errors.breed} </Text>
               <TouchableOpacity style={styles.dogButton}>
                 <Text style={styles.text}> Add Dog </Text>
               </TouchableOpacity>
