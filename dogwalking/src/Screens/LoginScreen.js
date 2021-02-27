@@ -4,7 +4,9 @@ import {
   View,
   StyleSheet,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { Formik } from "formik";
 import { AuthContext } from "../Navigation/AuthProvider";
@@ -33,38 +35,42 @@ const LoginScreen = ({ navigation }) => {
         }}
       >
         {(props) => (
-          <View style={styles.container}>
-            <Text style={styles.logo}> Dog Walking </Text>
-            <View style={styles.input}>
-              <TextInput
-                style={styles.input_Text}
-                placeholder="Email..."
-                placeholderTextColor="#003f5c"
-                onChangeText={props.handleChange("email")}
-                value={props.values.email}
-                onBlur={props.handleBlur("email")}
-              />
+          <TouchableWithoutFeedback onPress={() => {
+            Keyboard.dismiss();
+          }}>
+            <View style={styles.container}>
+              <Text style={styles.logo}> Dog Walking </Text>
+              <View style={styles.input}>
+                <TextInput
+                  style={styles.input_Text}
+                  placeholder="Email..."
+                  placeholderTextColor="#003f5c"
+                  onChangeText={props.handleChange("email")}
+                  value={props.values.email}
+                  onBlur={props.handleBlur("email")}
+                />
+              </View>
+              <Text style={styles.error_text}> {props.touched.email && props.errors.email} </Text>
+              <View style={styles.input}>
+                <TextInput
+                  style={styles.input_Text}
+                  placeholder="Password..."
+                  placeholderTextColor="#003f5c"
+                  secureTextEntry
+                  onChangeText={props.handleChange("password")}
+                  value={props.values.password}
+                  onBlur={props.handleBlur("password")}
+                />
+              </View>
+              <Text style={styles.error_text}> {props.touched.password && props.errors.password} </Text>
+              <TouchableOpacity style={styles.login_Button} onPress={props.handleSubmit}>
+                <Text style={styles.login_text}> Login </Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+                <Text style={styles.signup_Text}> Sign up </Text>
+              </TouchableOpacity>
             </View>
-            <Text style={styles.error_text}> {props.touched.email && props.errors.email} </Text>
-            <View style={styles.input}>
-              <TextInput
-                style={styles.input_Text}
-                placeholder="Password..."
-                placeholderTextColor="#003f5c"
-                secureTextEntry
-                onChangeText={props.handleChange("password")}
-                value={props.values.password}
-                onBlur={props.handleBlur("password")}
-              />
-            </View>
-            <Text style={styles.error_text}> {props.touched.password && props.errors.password} </Text>
-            <TouchableOpacity style={styles.login_Button} onPress={props.handleSubmit}>
-              <Text style={styles.login_text}> Login </Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-              <Text style={styles.signup_Text}> Sign up </Text>
-            </TouchableOpacity>
-          </View>
+          </TouchableWithoutFeedback>
         )}
       </Formik>
     </View>

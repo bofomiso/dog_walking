@@ -5,6 +5,8 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard
 } from "react-native";
 import { Formik } from "formik";
 import DogImagePicker from "../components/DogImagePicker";
@@ -17,42 +19,46 @@ const AddDogScreen = () => {
         onSubmit={values => console.log(values)}
       >
         {(props) => (
-          <View style={styles.container}>
-            <DogImagePicker />
-            <View style={styles.input}>
-              <TextInput
-                style={styles.inputText}
-                placeholder="Name..."
-                placeholderTextColor='#003f5c'
-                onChangeText={props.handleChange("name")}
-                value={props.values.name}
-                onBlur={props.handleBlur("name")}
-              />
+          <TouchableWithoutFeedback onPress={() => {
+            Keyboard.dismiss();
+          }}>
+            <View style={styles.container}>
+              <DogImagePicker />
+              <View style={styles.input}>
+                <TextInput
+                  style={styles.inputText}
+                  placeholder="Name..."
+                  placeholderTextColor='#003f5c'
+                  onChangeText={props.handleChange("name")}
+                  value={props.values.name}
+                  onBlur={props.handleBlur("name")}
+                />
+              </View>
+              <View style={styles.input}>
+                <TextInput
+                  style={styles.inputText}
+                  placeholder="Age..."
+                  placeholderTextColor='#003f5c'
+                  onChangeText={props.handleChange("age")}
+                  value={props.values.age}
+                  onBlur={props.handleBlur("age")}
+                />
+              </View>
+              <View style={styles.input}>
+                <TextInput
+                  style={styles.inputText}
+                  placeholder="Breed..."
+                  placeholderTextColor='#003f5c'
+                  onChangeText={props.handleChange("breed")}
+                  value={props.values.password}
+                  onBlur={props.handleBlur("breed")}
+                />
+              </View>
+              <TouchableOpacity style={styles.dogButton}>
+                <Text style={styles.text}> Add Dog </Text>
+              </TouchableOpacity>
             </View>
-            <View style={styles.input}>
-              <TextInput
-                style={styles.inputText}
-                placeholder="Age..."
-                placeholderTextColor='#003f5c'
-                onChangeText={props.handleChange("age")}
-                value={props.values.age}
-                onBlur={props.handleBlur("age")}
-              />
-            </View>
-            <View style={styles.input}>
-              <TextInput
-                style={styles.inputText}
-                placeholder="Breed..."
-                placeholderTextColor='#003f5c'
-                onChangeText={props.handleChange("breed")}
-                value={props.values.password}
-                onBlur={props.handleBlur("breed")}
-              />
-            </View>
-            <TouchableOpacity style={styles.dogButton}>
-              <Text style={styles.text}> Add Dog </Text>
-            </TouchableOpacity>
-          </View>
+          </TouchableWithoutFeedback>
         )}
       </Formik>
     </View>

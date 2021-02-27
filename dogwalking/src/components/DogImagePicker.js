@@ -8,16 +8,15 @@ import {
   Image,
 } from "react-native";
 import { launchImageLibrary } from "react-native-image-picker";
-import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
-
 
 export default function DogImagePicker() {
   const [imageSource, setImageSource] = useState(null);
 
   function selectImage() {
     let options = {
-      maxWidth: 300,
-      maxHeight: 300,
+      quality: 1.0,
+      maxWidth: 200,
+      maxHeight: 200,
       mediaType: "photo",
       storageOptions: {
         skipBackup: true
@@ -64,9 +63,9 @@ export default function DogImagePicker() {
 
 const styles = StyleSheet.create({
   circle: {
-    width: 300,
-    height: 300,
-    borderRadius: 300 / 2,
+    width: 200,
+    height: 200,
+    borderRadius: 200 / 2,
     backgroundColor: '#D1D8Df',
     marginTop: 50,
     marginBottom: 20,
