@@ -1,9 +1,12 @@
+import { FirebaseFirestoreTypes } from "@react-native-firebase/firestore";
 import React from "react";
 import { useContext } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { AuthContext } from "../Navigation/AuthProvider";
+import firestore from "@react-native-firebase/firestore";
 
 const HomeScreen = ({ navigation }) => {
+  
   const { user, logout } = useContext(AuthContext);
   return (
     <View style={styles.container}>
@@ -14,6 +17,7 @@ const HomeScreen = ({ navigation }) => {
         <Text style={styles.text}> Add Dog </Text>
       </TouchableOpacity>
     </View>
+
   )
 }
 

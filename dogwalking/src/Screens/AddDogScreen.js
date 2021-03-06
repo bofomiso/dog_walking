@@ -1,82 +1,160 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import {
   Text,
   View,
   StyleSheet,
-  TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  Image,
+  Alert,
 } from "react-native";
 import { Formik } from "formik";
 import * as yup from "yup";
-import DogImagePicker from "../components/DogImagePicker";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
+import { launchImageLibrary } from "react-native-image-picker";
+import Input from "../components/Input";
+import firestore from "@react-native-firebase/firestore";
+import storage from "@react-native-firebase/storage";
+import { AuthContext } from "../Navigation/AuthProvider";
+import { firebase } from "@react-native-firebase/auth";
+import { Platform } from "react-native";
 
 const AddSchema = yup.object({
   name: yup
     .string()
-    .required("name is required"),
+    .required("Name is required"),
   age: yup
     .number()
-    .required("age is required"),
+    .required("Age is required"),
   breed: yup
     .string()
-    .required("What breed is your dog?")
+    .required("What breed is your dog?"),
+  // photo: yup
+  //   .object()
+  //   .required("A picture is required")
 })
 
-const AddDogScreen = () => {
+const AddDogScreen = ({navigation}) => {
+  const [imageSource, setImageSource] = useState(null);
+  const { user } = useContext(AuthContext);
+  function selectImage() {
+    let options = {
+      quality: 1.0,
+      maxWidth: 200,
+      maxHeight: 200,
+      mediaType: "photo",
+      storageOptions: {
+        skipBackup: true
+        
+      }
+    };
+
+    launchImageLibrary(options, response => {
+      if(response.didCancel) {
+        Alert.alert("You did not select a image");
+      }
+      else if(response.error) {
+        console.log("ImagePicker Error: ", response.error);
+      }
+      else if(response.customButton) {
+        console.log("User tapped custom button: ", response.customButton);
+      }
+      else {
+
+        let source = { uri: response.uri };
+        setImageSource(source.uri);
+      }
+    });
+  }
+
   return (
-    <View style={styles.container}>
+    <View>
       <Formik
         initialValues={{ name: "", age: "", breed: "" }}
         validationSchema={AddSchema}
-        onSubmit={values => console.log(values)}
+        onSubmit={(values) => {
+          firestore()
+            .collection("Dogs")
+            .add({
+              user: user.uid,
+              name: values.name,
+              age: values.age,
+              breed: values.breed,
+              pictureUri: imageSource,
+            })
+            .then(() => {
+              console.log("User added!");
+            });
+            let imageName = user.uid + " " + values.name;
+            let uri = imageSource;
+            let uploadUri = Platform.OS === "ios" ? uri.replace("file://", '') : uri;
+            storage()
+              .ref(imageName)
+              .putFile(uploadUri)
+              .then((snapshot) => {
+                console.log("Image has been uploaded");
+              })
+
+        }}
       >
         {(props) => (
-          <TouchableWithoutFeedback onPress={() => {
-            Keyboard.dismiss();
+          <KeyboardAwareScrollView>
+            <TouchableWithoutFeedback onPress={() => {
+              Keyboard.dismiss();
           }}>
             <View style={styles.container}>
-              <DogImagePicker />
-              <View style={styles.input}>
-                <TextInput
-                  style={styles.inputText}
-                  placeholder="Name..."
-                  placeholderTextColor='#003f5c'
+              <View>
+                {imageSource === null ? (
+                  <TouchableOpacity onPress={selectImage}>
+                    <View style={styles.circle}>
+                      <Text> Add picture </Text>
+                    </View>
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity onPress={selectImage}>
+                    <Image
+                      source={{ uri: imageSource }}
+                      style={styles.circle}
+                    />
+                  </TouchableOpacity>
+                )}
+              </View>
+              <Text style={styles.errorText}> {props.touched.name && props.errors.name} </Text>
+                <Input
+                  placeholder="Name.."
                   onChangeText={props.handleChange("name")}
                   value={props.values.name}
                   onBlur={props.handleBlur("name")}
-                />
-              </View>
-              <Text style={styles.errorText}> {props.touched.name && props.errors.name} </Text>
-              <View style={styles.input}>
-                <TextInput
-                  style={styles.inputText}
-                  placeholder="Age..."
-                  placeholderTextColor='#003f5c'
+                >
+                </Input>
+                <Text style={styles.errorText}> {props.touched.name && props.errors.name} </Text>
+                <Input
+                  placeholder="Age.."
                   onChangeText={props.handleChange("age")}
                   value={props.values.age}
                   onBlur={props.handleBlur("age")}
                   keyboardType="numeric"
-                />
-              </View>
-              <Text style={styles.errorText}> {props.touched.age && props.errors.age} </Text>
-              <View style={styles.input}>
-                <TextInput
-                  style={styles.inputText}
-                  placeholder="Breed..."
-                  placeholderTextColor='#003f5c'
+                >
+                </Input>
+                <Text style={styles.errorText}> {props.touched.age && props.errors.age} </Text>
+                <Input
+                  placeholder="Breed.."
                   onChangeText={props.handleChange("breed")}
-                  value={props.values.password}
+                  value={props.values.breed}
                   onBlur={props.handleBlur("breed")}
-                />
+                >
+                </Input>
+                <Text style={styles.errorText}> {props.touched.breed && props.errors.breed} </Text>
+                <TouchableOpacity 
+                  style={styles.dogButton} 
+                  onPress={() => {props.handleSubmit(); navigation.navigate("Home")}}
+                >
+                  <Text style={styles.text}> Add Dog </Text>
+                </TouchableOpacity>
               </View>
-              <Text style={styles.errorText}> {props.touched.breed && props.errors.breed} </Text>
-              <TouchableOpacity style={styles.dogButton}>
-                <Text style={styles.text}> Add Dog </Text>
-              </TouchableOpacity>
-            </View>
-          </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback>
+          </KeyboardAwareScrollView>
         )}
       </Formik>
     </View>
@@ -121,7 +199,21 @@ const styles = StyleSheet.create({
   errorText: {
     color: 'red',
     fontSize: 16,
-  }
+  },
+  circle: {
+    width: 200,
+    height: 200,
+    borderRadius: 200 / 2,
+    backgroundColor: '#D1D8Df',
+    marginTop: 50,
+    marginBottom: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  imageContainer: {
+    width: 300,
+    height: 300,
+  },
 });
 
 export default AddDogScreen;
