@@ -17,7 +17,6 @@ const HomeScreen = ({ navigation }) => {
         <Text style={styles.text}> Add Dog </Text>
       </TouchableOpacity>
     </View>
-
   )
 }
 
