@@ -17,7 +17,6 @@ import Input from "../components/Input";
 import firestore from "@react-native-firebase/firestore";
 import storage from "@react-native-firebase/storage";
 import { AuthContext } from "../Navigation/AuthProvider";
-import { firebase } from "@react-native-firebase/auth";
 import { Platform } from "react-native";
 
 const AddSchema = yup.object({
@@ -73,30 +72,47 @@ const AddDogScreen = ({navigation}) => {
       <Formik
         initialValues={{ name: "", age: "", breed: "" }}
         validationSchema={AddSchema}
-        onSubmit={(values) => {
-          firestore()
-            .collection("Dogs")
-            .add({
-              user: user.uid,
-              name: values.name,
-              age: values.age,
-              breed: values.breed,
-              pictureUri: imageSource,
+        onSubmit={async(values) => {
+          let imageName = user.uid + " " + values.name;
+          let uri = imageSource;
+          let uploadUri = Platform.OS === "ios" ? uri.replace("file://", '') : uri;
+            await storage()
+            .ref(imageName)
+            .putFile(uploadUri)
+            .then((snapshot) => {
+              console.log("Image has been uploaded");
+              return storage()
+                .ref(imageName)
+                .getDownloadURL()
+                .then(url => {
+                  console.log(url);
+                  firestore()
+                  .collection("Dogs")
+                  .add({
+                    user: user.uid,
+                    name: values.name,
+                    age: values.age,
+                    breed: values.breed,
+                    pictureUri: url,
+                  })
+                  .then(() => {
+                    console.log("Dog added!");
+                  });
+                })
             })
-            .then(() => {
-              console.log("User added!");
-            });
-            let imageName = user.uid + " " + values.name;
-            let uri = imageSource;
-            let uploadUri = Platform.OS === "ios" ? uri.replace("file://", '') : uri;
-            storage()
-              .ref(imageName)
-              .putFile(uploadUri)
-              .then((snapshot) => {
-                console.log("Image has been uploaded");
-              })
-
-        }}
+          // await firestore()
+          // .collection("Dogs")
+          // .add({
+          //   user: user.uid,
+          //   name: values.name,
+          //   age: values.age,
+          //   breed: values.breed,
+          //   pictureUri: url,
+          // })
+          // .then(() => {
+          //   console.log("Dog added!");
+          // });
+      }}
       >
         {(props) => (
           <KeyboardAwareScrollView>

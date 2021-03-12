@@ -1,14 +1,52 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect} from 'react'
 import { 
   StyleSheet, 
   Text, 
   View, 
   Modal,
-  TouchableOpacity, 
+  TouchableOpacity,
+  FlatList,
+  SafeAreaView 
 } from 'react-native'
+import firestore from "@react-native-firebase/firestore";
 
 export default function DogModal({isVisible, toggleModal}) {
+  function Dogs() {
+    const [dogs, setDogs] = useState([]);
+    useEffect(() => {
+      const subscriber = firestore()
+        .collection("Dogs")
+        .onSnapshot((querySnapshot) => {
+          const dogs = [];
+
+          querySnapshot.forEach(documentSnapshot => {
+            dogs.push({
+              ...documentSnapshot.data(),
+              key: documentSnapshot.id,
+            });
+          });
+          setDogs(dogs);
+        });
+      return () => subscriber();
+    }, []);
+    return (
+      <FlatList
+        data={dogs}
+        renderItem={({item}) => (
+          <View>
+            <TouchableOpacity>
+              <Text> dog name: {item.name} </Text>
+              <Text style={styles.modalText}> dog breed: {item.breed} </Text>
+
+            </TouchableOpacity>
+          </View>
+        )}
+      />
+    );
+
+  }
   return (
+    <SafeAreaView>
     <View>
       <Modal
         animationType="slide"
@@ -20,7 +58,7 @@ export default function DogModal({isVisible, toggleModal}) {
       >
         <View style={styles.container}>
           <View style={styles.modalView}>
-            <Text> Hello World! </Text>
+            <Dogs></Dogs>
             <TouchableOpacity onPress={toggleModal}>
               <Text> close </Text>
             </TouchableOpacity>
@@ -28,6 +66,7 @@ export default function DogModal({isVisible, toggleModal}) {
         </View>
       </Modal>
     </View>
+    </SafeAreaView>
   )
 }
 
@@ -38,10 +77,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   modalView: {
-    margin: 20,
+    margin: "25%",
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 55,
+    padding: "15%",
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -52,4 +91,8 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5
   },
+  modalText: {
+    alignSelf: "flex-start",
+    paddingBottom: 5,
+  }
 });

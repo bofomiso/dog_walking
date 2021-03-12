@@ -1,9 +1,7 @@
-import { FirebaseFirestoreTypes } from "@react-native-firebase/firestore";
 import React from "react";
 import { useContext } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { AuthContext } from "../Navigation/AuthProvider";
-import firestore from "@react-native-firebase/firestore";
 
 const HomeScreen = ({ navigation }) => {
   

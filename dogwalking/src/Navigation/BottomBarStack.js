@@ -2,6 +2,7 @@ import "react-native-gesture-handler";
 import WalkingScreen from "../Screens/WalkingScreen";
 import ProfileScreen from "../Screens/ProfileScreen";
 import HomeStack from "./HomeStack";
+import WalkingStack from "./WalkingStack";
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
@@ -27,7 +28,7 @@ export default function BottomBarStack() {
       />
       <Tab.Screen
         name="Walking"
-        component={WalkingScreen}
+        component={WalkingStack}
         options={{
           tabBarIcon: ({ color }) => (
             <FontAwesomeIcon name="paw" color={color} size={25} />

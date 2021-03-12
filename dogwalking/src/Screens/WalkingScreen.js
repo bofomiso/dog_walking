@@ -1,24 +1,29 @@
-import React, {useState} from "react";
+import React from "react";
 import { 
   Text, 
   View, 
   StyleSheet, 
-  TouchableOpacity 
+  TouchableOpacity, 
 } from "react-native";
-import DogModal from "../components/DogModal"
+import MapView from "react-native-maps";
 
-const WalkingScreen = () => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const toggleModal = () => setModalVisible(state => !state)
+const WalkingScreen = ({ navigation }) => {  
   return (
-    <View style={styles.text}>
-      <Text>Walking Screen</Text>
-      <TouchableOpacity 
-        onPress={() => {setModalVisible(true)}}
-      >
-        <Text> Open Modal!</Text>
+    <View style={{ flex: 1}}>
+      <MapView
+        style={{ flex: 0.6 }}
+        showsUserLocation
+        followsUserLocation={true}
+        initialRegion={{
+            latitude: 37.78825,
+            longitude: -122.4324,
+            latitudeDelta: 0.0333,
+            longitudeDelta: 0.0333,
+        }}
+      />
+      <TouchableOpacity onPress={() => navigation.navigate("Choose Dog")}>
+        <Text>Pick your dog!</Text>
       </TouchableOpacity>
-      <DogModal isVisible={modalVisible} toggleModal={toggleModal}></DogModal>
     </View>
   )
 }
