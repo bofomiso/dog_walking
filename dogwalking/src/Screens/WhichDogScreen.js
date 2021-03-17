@@ -11,7 +11,11 @@ import firestore from "@react-native-firebase/firestore";
 import Card from "../components/Card"
 
 
-const WhichDogScreen = () => {
+const WhichDogScreen = ({ navigation, route }) => {
+  const [dogName, setDogName] =  useState();
+  const chooseDog = (dog) => {
+    setDogName(dog);
+  }; 
   function Dogs() {
     const [dogs, setDogs] = useState([]);
     useEffect(() => {
@@ -34,19 +38,14 @@ const WhichDogScreen = () => {
         data={dogs}
         renderItem={({item}) => (
           <View>
-            <TouchableOpacity>
-              <Card>
-                <Image
-                  source={{ uri: item.pictureUri }}
-                  style={styles.pictureContainer}
-                />
-                <View style={styles.row}>
-                  <Text style={styles.cardText}> {item.name} </Text>
-                  <Text style={styles.cardText}> {item.breed} </Text>
-                  <Text style={styles.cardText}> Age: {item.age} </Text>
-                </View>
+              <Card
+                name={item.name}
+                age={item.age}
+                breed={item.breed}
+                pictureUri={item.pictureUri}
+                setDog={chooseDog}
+              >
               </Card>
-            </TouchableOpacity>
           </View>
         )}
       />

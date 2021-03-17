@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { 
   Text, 
   View, 
@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import MapView from "react-native-maps";
 
-const WalkingScreen = ({ navigation }) => {  
+const WalkingScreen = ({ navigation, route }) => { 
   return (
     <View style={{ flex: 1}}>
       <MapView
@@ -24,6 +24,7 @@ const WalkingScreen = ({ navigation }) => {
       <TouchableOpacity onPress={() => navigation.navigate("Choose Dog")}>
         <Text>Pick your dog!</Text>
       </TouchableOpacity>
+      <Text>This is the dog you chose {route.params?.dog} </Text>
     </View>
   )
 }

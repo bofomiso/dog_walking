@@ -1,13 +1,34 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
+import React, {useState} from "react";
+import {
+  Text, 
+  View,
+  StyleSheet,
+  Image,
+ } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 
-export default function Card(props) {
+export default function Card({ name, age, breed, pictureUri, setDog }) {
+  const navigation = useNavigation();
   return (
-      <View style={styles.card}> 
-          <View style={styles.cardContent}>
-              {props.children}
-          </View>
-      </View>
+    <View style={styles.card}> 
+      <TouchableOpacity onPress={
+        () => {
+          setDog(name); 
+          navigation.navigate("Walking", { dog: name })}}>
+        <View style={styles.cardContent}>
+            <Image
+              source={{ uri: pictureUri }}
+              style={styles.pictureContainer}
+            />
+              <View style={styles.row}>
+                <Text style={styles.cardText}> {name} </Text>
+                <Text style={styles.cardText}> {breed} </Text>
+                <Text style={styles.cardText}> Age: {age} </Text>
+              </View>
+        </View>
+        </TouchableOpacity>
+    </View>
   )
 }
 
@@ -36,5 +57,19 @@ const styles = StyleSheet.create({
     marginHorizontal: 18,
     marginVertical: 20,
     flexDirection: 'row'
+  },
+  cardText: {
+    fontSize: 20,
+    padding: 5
+  },
+  row: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-end',
+  },
+  pictureContainer: {
+    width: 100,
+    height: 100,
+    borderRadius: 100/2
   }
 });
