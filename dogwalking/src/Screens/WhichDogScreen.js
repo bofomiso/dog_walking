@@ -4,8 +4,6 @@ import {
   Text, 
   View,
   FlatList,
-  TouchableOpacity,
-  Image, 
 } from 'react-native'
 import firestore from "@react-native-firebase/firestore";
 import Card from "../components/Card"

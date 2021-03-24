@@ -1,5 +1,4 @@
 import "react-native-gesture-handler";
-import WalkingScreen from "../Screens/WalkingScreen";
 import ProfileScreen from "../Screens/ProfileScreen";
 import HomeStack from "./HomeStack";
 import WalkingStack from "./WalkingStack";

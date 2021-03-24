@@ -1,37 +1,42 @@
-import React, { useState } from "react";
-import { 
-  Text, 
+import React, { useContext, useCallback }  from "react";
+import {
   View, 
+  Text, 
   StyleSheet, 
-  TouchableOpacity, 
+  TouchableOpacity,
+  SafeAreaView, 
 } from "react-native";
-import MapView from "react-native-maps";
+import Map from "../components/Map";
+import { LocationContext } from "../Navigation/LocationProvider"
+import useLocation from "../Hooks/useLocation";
+import{ useIsFocused } from "@react-navigation/native";
+import WalkingButton from "../components/WalkingButton";
 
-const WalkingScreen = ({ navigation, route }) => { 
+const WalkingScreen = ({ navigation, route }) => {
+  const isFocused = useIsFocused(); //keep track if screen is focused 
+  const { recording, addLocation } = useContext(LocationContext);
+  const callback = useCallback(location => {
+    addLocation(location, recording);
+  }, [recording]);
+  //console.log(recording);
+  const [err] = useLocation(isFocused || recording, callback);
   return (
-    <View style={{ flex: 1}}>
-      <MapView
-        style={{ flex: 0.6 }}
-        showsUserLocation
-        followsUserLocation={true}
-        initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.0333,
-            longitudeDelta: 0.0333,
-        }}
-      />
-      <TouchableOpacity onPress={() => navigation.navigate("Choose Dog")}>
-        <Text>Pick your dog!</Text>
-      </TouchableOpacity>
-      <Text>This is the dog you chose {route.params?.dog} </Text>
-    </View>
+    <SafeAreaView style={{ flex: 1}}>
+      <Map/>
+      <View style={styles.text}>
+        <TouchableOpacity onPress={() => navigation.navigate("Choose Dog")}>
+          <Text>Pick your dog!</Text>
+        </TouchableOpacity>
+        <Text>This is the dog you chose {route.params?.dog} </Text>
+        {err ? <Text> Please enable location services</Text> : null}
+        <WalkingButton/>
+      </View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
   text: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   }
