@@ -4,8 +4,8 @@ import {
   View,
   StyleSheet,
   Image,
+  TouchableOpacity
  } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Card({ name, age, breed, pictureUri, setDog }) {

@@ -1,5 +1,4 @@
 import React, { createContext, useState } from "react";
-import { State } from "react-native-gesture-handler";
 
 export const LocationContext = createContext();
 
