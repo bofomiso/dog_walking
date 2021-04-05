@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { 
   StyleSheet, 
   Text, 
@@ -7,10 +7,14 @@ import {
 } from 'react-native'
 import firestore from "@react-native-firebase/firestore";
 import Card from "../components/Card"
+import { AuthContext } from "../Navigation/AuthProvider";
+
 
 
 const WhichDogScreen = ({ navigation, route }) => {
   const [dogName, setDogName] =  useState();
+  const { user } = useContext(AuthContext);
+
   const chooseDog = (dog) => {
     setDogName(dog);
   }; 
@@ -19,6 +23,7 @@ const WhichDogScreen = ({ navigation, route }) => {
     useEffect(() => {
       const subscriber = firestore()
         .collection("Dogs")
+        .where("user", "==", `${user.uid}` )
         .onSnapshot((querySnapshot) => {
           const dogs = [];
           querySnapshot.forEach(documentSnapshot => {

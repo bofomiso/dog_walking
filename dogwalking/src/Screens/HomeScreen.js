@@ -1,31 +1,53 @@
 import React from "react";
 import { useContext } from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import {
+   Text, 
+   View, 
+   StyleSheet, 
+   TouchableOpacity,
+   SafeAreaView, 
+} from "react-native";
 import { AuthContext } from "../Navigation/AuthProvider";
+import Divider from "../components/Divider"
+import HorizontalDogList from "../components/HorizontalDogList";
 
 const HomeScreen = ({ navigation }) => {
   
-  const { user, logout } = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.dogsText}> Your dogs</Text>
+      <Divider/>
+      <View style={styles.horizontal}>
+        <HorizontalDogList/>
+      </View>
       <TouchableOpacity onPress={() => logout()}>
         <Text style={styles.text}> Logout </Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("Add Dog")}>
-        <Text style={styles.text}> Add Dog </Text>
-      </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
   },
   text: {
     padding: 20
-  }
+  },
+  circle: {
+    width: 85,
+    height: 85,
+    borderRadius: 85 / 2,
+    backgroundColor: '#D1D8Df',
+  },
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    // backgroundColor: 'black'
+  },
+  dogsText: {
+    fontSize: 25,
+  },
 });
 export default HomeScreen;

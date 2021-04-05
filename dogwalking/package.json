@@ -20,6 +20,7 @@
     "@react-navigation/stack": "^5.14.2",
     "expo-location": "^11.0.0",
     "formik": "^2.2.6",
+    "haversine": "^1.1.1",
     "react": "16.13.1",
     "react-native": "0.63.4",
     "react-native-gesture-handler": "^1.9.0",

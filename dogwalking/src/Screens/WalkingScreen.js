@@ -12,14 +12,14 @@ import useLocation from "../Hooks/useLocation";
 import{ useIsFocused } from "@react-navigation/native";
 import WalkingButton from "../components/WalkingButton";
 import StopWatch from "../components/StopWatch";
+import Divider from "../components/Divider"
 
 const WalkingScreen = ({ navigation, route }) => {
   const isFocused = useIsFocused(); //keep track if screen is focused 
-  const { recording, addLocation } = useContext(LocationContext);
+  const { recording, addLocation, currentLocation } = useContext(LocationContext);
   const callback = useCallback(location => {
     addLocation(location, recording);
   }, [recording]);
-  //console.log(recording);
   const [err] = useLocation(isFocused || recording, callback);
   const [StopwatchStart, setStopwatchStart] = useState(false); //start stopwatch
   const [StopwatchReset, setStopwatchReset] = useState(false); //reset stopwatch
@@ -36,12 +36,15 @@ const WalkingScreen = ({ navigation, route }) => {
         <TouchableOpacity onPress={() => navigation.navigate("Choose Dog")}>
           <Text style={styles.chooseDog}>Who are you taking?</Text>
         </TouchableOpacity>
-        <Text> {route.params?.dog} it is </Text>
+      </View>
+      <Divider/>
+      <View style={styles.container}>
+        <Text styles={styles.chooseDog}> {route.params?.dog} it is </Text>
         {err ? <Text> Please enable location services</Text> : null}
         <StopWatch isStart={StopwatchStart} isReset={StopwatchReset}/>
       </View>
-
-        <WalkingButton isStart={StartWatch} isReset={ResetWatch}/>
+      <Divider/>
+      <WalkingButton isStart={StartWatch} isReset={ResetWatch}/>
     </SafeAreaView>
   )
 }

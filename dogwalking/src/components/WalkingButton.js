@@ -6,37 +6,21 @@ import {
     TouchableOpacity, 
 } from 'react-native'
 import { LocationContext } from "../Navigation/LocationProvider";
-import { Stopwatch } from "react-native-stopwatch-timer";
 
 export default function WalkingButton({ isStart, isReset }) {
   const { startTracking, stopTracking, recording, setLocations } = useContext(LocationContext);
-  const [disableButton, setDisableButton] =  useState(false);
-  //console.log(recording);
+  const [disableButton, setDisableButton] =  useState(true);
   return (
       <>
-      {/* <View styles={styles.container}>
-        <Stopwatch
-          laps
-          msecs={false}
-          start={StopwatchStart}
-          reset={StopwatchReset}
-          options={options}
-          // getTime={(time) => {
-          //   console.log(time);
-          // }}
-        />
-      </View> */}
       <View style={styles.row}>
         {recording ? (
           <TouchableOpacity
             style={styles.circle} 
             onPress={() => {
-              setDisableButton(true);
+              setDisableButton(false);
               stopTracking();
               isStart(false);
               isReset(false);
-              // setStopwatchStart(!StopwatchStart);
-              // setStopwatchReset(false);
             }}
           >
             <Text style={styles.text}>Stop</Text>
@@ -48,8 +32,6 @@ export default function WalkingButton({ isStart, isReset }) {
                 startTracking();
                 isStart(true);
                 isReset(false);
-                // setStopwatchStart(!StopwatchStart);
-                // setStopwatchReset(false);
               }}
             >
               <Text style={styles.text}>Start</Text>
@@ -57,7 +39,7 @@ export default function WalkingButton({ isStart, isReset }) {
           )}
           <TouchableOpacity 
             style={styles.circle} 
-            disabled={disableButton ? false : true}
+            disabled={disableButton ? true : false}
             onPress={() => {
               setLocations([]);
               isReset(true);

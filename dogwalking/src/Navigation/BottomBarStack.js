@@ -34,7 +34,7 @@ export default function BottomBarStack() {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Profile"
         component={ProfileScreen}
         options={{
@@ -42,7 +42,7 @@ export default function BottomBarStack() {
             <FontAwesomeIcon name="user" color={color} size={25} />
           ),
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 }

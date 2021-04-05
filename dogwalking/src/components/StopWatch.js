@@ -30,6 +30,7 @@ const options = {
     borderRadius: 5,
     width: 200,
     alignItems: 'center',
+    marginBottom: 10
   },
   text: {
     fontSize: 25,
