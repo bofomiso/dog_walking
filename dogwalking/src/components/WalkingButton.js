@@ -6,12 +6,36 @@ import {
     TouchableOpacity, 
 } from 'react-native'
 import { LocationContext } from "../Navigation/LocationProvider";
+import useSaveMap from "../Hooks/useSaveMap";
+import useTimer from "../Hooks/useTimer";
+import { dateHelper } from "../utils/Helpers";
 
-export default function WalkingButton({ isStart, isReset }) {
-  const { startTracking, stopTracking, recording, setLocations } = useContext(LocationContext);
+export default function WalkingButton({ dogName }) {
+  const { 
+    startTracking, 
+    stopTracking, 
+    recording, 
+    setCurrentTime, 
+    setCurrentDate, 
+    setDay, 
+  } = useContext(LocationContext);
   const [disableButton, setDisableButton] =  useState(true);
+  const { time, handleStart, handlePause, handleResume, handleReset } = useTimer();
+
+  const [saveMap] = useSaveMap();
+  const formattedTime = (time) => {
+    const getSeconds = `0${(time % 60)}`.slice(-2)
+    const minutes = `${Math.floor(time / 60)}`
+    const getMinutes = `0${minutes % 60}`.slice(-2)
+    const getHours = `0${Math.floor(time / 3600)}`.slice(-2)
+
+    return `${getHours}:${getMinutes}:${getSeconds}`
+  }
   return (
       <>
+      <View style={styles.stopWatchContainer}> 
+        <Text style={styles.clockText}> {formattedTime(time)}</Text>
+      </View>
       <View style={styles.row}>
         {recording ? (
           <TouchableOpacity
@@ -19,8 +43,7 @@ export default function WalkingButton({ isStart, isReset }) {
             onPress={() => {
               setDisableButton(false);
               stopTracking();
-              isStart(false);
-              isReset(false);
+              handlePause();
             }}
           >
             <Text style={styles.text}>Stop</Text>
@@ -29,9 +52,9 @@ export default function WalkingButton({ isStart, isReset }) {
             <TouchableOpacity
               style={styles.circle} 
               onPress={() => {
+                dateHelper(setCurrentDate, setCurrentTime, setDay);
                 startTracking();
-                isStart(true);
-                isReset(false);
+                handleStart();
               }}
             >
               <Text style={styles.text}>Start</Text>
@@ -41,8 +64,9 @@ export default function WalkingButton({ isStart, isReset }) {
             style={styles.circle} 
             disabled={disableButton ? true : false}
             onPress={() => {
-              setLocations([]);
-              isReset(true);
+              saveMap(dogName, formattedTime(time));
+              //setLocations([]);
+              handleReset();
             }}
           >
             <Text style={styles.text}>Save Walk </Text>
@@ -77,19 +101,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 10,
   },
-});
-
-const options = {
-  container: {
-    backgroundColor: '#FF0000',
+  stopWatchContainer: {
+    // backgroundColor: '#1f6aba',
     padding: 5,
     borderRadius: 5,
-    width: 200,
+    // width: 200,
     alignItems: 'center',
+    marginBottom: 10
+    
   },
-  text: {
+  clockText: {
     fontSize: 25,
-    color: '#FFF',
-    marginLeft: 7,
+    color: "black",
   },
-};
+
+});
+
+

@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import haversine from "haversine";
 
 export const LocationContext = createContext();
@@ -9,6 +9,9 @@ export const LocationProvider = ({ children }) => {
   const [locations, setLocations] = useState([]);
   const [distanceTraveled, setDistanceTraveled] = useState(0);
   const [prevLatLng, setPrevLatLng] = useState({latitude: 0, longitude: 0});
+  const [currentDate, setCurrentDate] = useState("");
+  const [currentTime, setCurrentTime] = useState("");
+  const [day, setDay] = useState("");
   return (
     <LocationContext.Provider
       value={{
@@ -18,10 +21,12 @@ export const LocationProvider = ({ children }) => {
         setLocations,
         currentLocation, 
         setCurrentLocation,
-        distanceTraveled,
-        setDistanceTraveled,
-        prevLatLng,
-        setPrevLatLng,
+        currentDate,
+        setCurrentDate,
+        currentTime,
+        setCurrentTime,
+        day,
+        setDay,
         addLocation: (location, tracking) => {
           const calcDistance = (latlng) => {
             prevlatlng = {latitude: location.coords.latitude, longitude: location.coords.longitude}; 
@@ -47,6 +52,23 @@ export const LocationProvider = ({ children }) => {
             // },
         startTracking: () => {
           setRecording(true);
+          //console.log("hello")
+          // var date = new Date().getDate(); //get current day of the month
+          // var month = new Date().getMonth() + 1; //get current Month
+          // var year = new Date().getFullYear(); // get current Year
+          // var hour = new Date().getHours();
+          // var dayOfWeek = new Date().getDay();
+          // var ampm = hour >= 12 ? "pm" : "am";
+          // hour = hour % 12;
+          // hour = hour ? hour : 12;
+          // var min = new Date().getMinutes();
+          // min = min < 10 ? "0" + min : min;
+
+          // setCurrentDate(month + "/" + date + "/" + year);
+          // // console.log(currentDate)
+          // setCurrentTime(hour + ":" + min + " " + ampm);
+          // console.log(currentTime);
+
         },
         stopTracking: () => {
           setRecording(false);

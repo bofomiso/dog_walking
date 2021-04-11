@@ -3,6 +3,7 @@ import { Platform } from "react-native";
 import { createNativeStackNavigator } from "react-native-screens/native-stack";
 import HomeScreen from "../Screens/HomeScreen";
 import AddDogScreen from "../Screens/AddDogScreen";
+import WalkingListScreen from "../Screens/WalkingListScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -18,6 +19,13 @@ export default function HomeStack() {
         name="Add Dog"
         component={AddDogScreen}
         options={{ 
+          headerShown: Platform.OS === 'ios' ? true : false
+        }}
+      />
+      <Stack.Screen 
+        name="Walks"
+        component={WalkingListScreen}
+        options={{
           headerShown: Platform.OS === 'ios' ? true : false
         }}
       />

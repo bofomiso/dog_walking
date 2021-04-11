@@ -13,22 +13,19 @@ import{ useIsFocused } from "@react-navigation/native";
 import WalkingButton from "../components/WalkingButton";
 import StopWatch from "../components/StopWatch";
 import Divider from "../components/Divider"
+import { MapContext } from "../Navigation/MapProvider";
+
 
 const WalkingScreen = ({ navigation, route }) => {
+  let times;
   const isFocused = useIsFocused(); //keep track if screen is focused 
-  const { recording, addLocation, currentLocation } = useContext(LocationContext);
+  const { recording, addLocation } = useContext(LocationContext);
   const callback = useCallback(location => {
     addLocation(location, recording);
   }, [recording]);
   const [err] = useLocation(isFocused || recording, callback);
-  const [StopwatchStart, setStopwatchStart] = useState(false); //start stopwatch
-  const [StopwatchReset, setStopwatchReset] = useState(false); //reset stopwatch
-  const StartWatch = (isStart) => {
-    setStopwatchStart(isStart);
-  }; 
-  const ResetWatch = (isReset) => {
-    setStopwatchReset(isReset);
-  }; 
+  //console.log(currentTime);
+  // console.log(currentDate);
   return (
     <SafeAreaView style={{ flex: 1}}>
       <Map/>
@@ -41,10 +38,10 @@ const WalkingScreen = ({ navigation, route }) => {
       <View style={styles.container}>
         <Text styles={styles.chooseDog}> {route.params?.dog} it is </Text>
         {err ? <Text> Please enable location services</Text> : null}
-        <StopWatch isStart={StopwatchStart} isReset={StopwatchReset}/>
+        {/* <StopWatch isStart={StopwatchStart} isReset={StopwatchReset} time={time} /> */}
       </View>
       <Divider/>
-      <WalkingButton isStart={StartWatch} isReset={ResetWatch}/>
+      <WalkingButton dogName={route.params?.dog} />
     </SafeAreaView>
   )
 }
@@ -65,8 +62,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 10,
     marginBottom: 5,
-  }
-
-
+  },
 });
+
 export default WalkingScreen;

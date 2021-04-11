@@ -21,6 +21,10 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.horizontal}>
         <HorizontalDogList/>
       </View>
+      <Divider/>
+      <TouchableOpacity onPress={() => navigation.navigate("Walks")}>
+        <Text style={styles.text}> Look at your walks!</Text>
+      </TouchableOpacity>
       <TouchableOpacity onPress={() => logout()}>
         <Text style={styles.text}> Logout </Text>
       </TouchableOpacity>
