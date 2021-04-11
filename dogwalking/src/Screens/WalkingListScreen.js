@@ -3,12 +3,16 @@ import {
   StyleSheet, 
   Text, 
   View,
-  FlatList, 
+  FlatList,
+  TouchableOpacity,
+  Touchable, 
 } from "react-native"
 import firestore from "@react-native-firebase/firestore";
 import { AuthContext } from "../Navigation/AuthProvider";
+import Divider from "../components/Divider";
+import { date } from "yup/lib/locale";
 
-const WalkingListScreen = () => {
+const WalkingListScreen = ({ navigation }) => {
   const { user } = useContext(AuthContext);
   function Walks() {
     const [walk, setWalk] = useState([]);
@@ -33,9 +37,19 @@ const WalkingListScreen = () => {
         data={walk}
         renderItem={({item}) => (
           <View>
-            <Text>{item.name}</Text>
-            <Text>{item.time} </Text>
-
+            <TouchableOpacity onPress={
+              () => navigation.navigate("WalkDetails", {
+                name: item.name,
+                day: item.dayOfWeek,
+                locations: item.locations,
+                time: item.time,
+                currentTime: item.timeOfDay,
+                date: item.date,
+              })}>
+              <Text>{item.name}</Text>
+              <Text>{item.time} </Text>
+            </TouchableOpacity>
+            <Divider/>
           </View>
         )}
       />

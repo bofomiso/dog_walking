@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "react-native-screens/native-stack";
 import HomeScreen from "../Screens/HomeScreen";
 import AddDogScreen from "../Screens/AddDogScreen";
 import WalkingListScreen from "../Screens/WalkingListScreen";
+import WalkingDetailScreen from "../Screens/WalkingDetailsScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +29,11 @@ export default function HomeStack() {
         options={{
           headerShown: Platform.OS === 'ios' ? true : false
         }}
+      />
+      <Stack.Screen
+        name="WalkDetails"
+        component={WalkingDetailScreen}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
