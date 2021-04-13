@@ -47,56 +47,37 @@ export default function RecentWalk() {
   return (
       <View style={styles.card}>
         <View style={styles.cardContent}>
-        {/* <FontAwesome5 name="dog" size={20}/> */}
-          <Image
-              source={{ uri: pictureUri }}
-              style={styles.pictureContainer}
-          />
           <View>
-            <Text style={styles.underline}>Name</Text>
+            <Image
+                source={{ uri: pictureUri }}
+                style={styles.pictureContainer}
+            />
             {recentWalk.map((item, key) => 
-            <Text key={key}>{ item.name }</Text>
+              <Text key={key} style={styles.name}>{ item.name }</Text>
             )}
           </View>
-          <View>
+          <View style={styles.container}>
+            <Text style={styles.underline}>Day</Text>
+            {recentWalk.map((item, key) => 
+              <Text key={key}>{ item.dayOfWeek }</Text>
+            )}
             <Text style={styles.underline}>Date</Text>
             {recentWalk.map((item, key) => 
             <Text key={key}>{ item.date }</Text>
             )}
+
           </View>
-          <View>
-            <Text style={styles.underline}>Day</Text>
-            {recentWalk.map((item, key) => 
-            <Text key={key}>{ item.timeOfDay }</Text>
-            )}
-          </View>
-          <View>
+
+          <View style={styles.container}>
+            <Text style={styles.underline}>Distance</Text>
+            <Text>0.0 Miles</Text>
             <Text style={styles.underline}>Time</Text>
             {recentWalk.map((item, key) => 
             <Text key={key}>{ item.time }</Text>
             )}
           </View>
-          {/* <Text style={styles.underline}>Date</Text> */}
-          {/* <Text style={styles.underline}>Day</Text>
-          <Text style={styles.underline}>Time</Text>
-          <Text style={styles.underline}>Duration</Text> */}
         </View>
         <View style={styles.cardContent}>
-          {/* {recentWalk.map((item, key) => 
-            <Text key={key}>{ item.name }</Text>
-          )}
-          {recentWalk.map((item, key) => 
-            <Text key={key}>{ item.date }</Text>
-          )} */}
-          {/* {recentWalk.map((item, key) => 
-            <Text key={key}>{ item.time }</Text>
-          )}
-          {recentWalk.map((item, key) => 
-            <Text key={key}>{ item.timeOfDay }</Text>
-          )}
-          {recentWalk.map((item, key) => 
-            <Text key={key}>{ item.dayOfWeek }</Text>
-          )} */}
         </View>
       </View>
   )
@@ -122,7 +103,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     flexWrap: 'wrap',
     flexDirection: 'row',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-around'
   },
   underline: {
     textDecorationLine: 'underline'
@@ -131,5 +112,11 @@ const styles = StyleSheet.create({
     width: 85,
     height: 85,
     borderRadius: 85/2,
+  },
+  name: {
+    textAlign: 'center'
+  },
+  container: {
+    justifyContent: 'space-evenly'
   },
 });
