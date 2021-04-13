@@ -5,13 +5,11 @@ import {
   View,
   FlatList,
   TouchableOpacity,
-  Touchable, 
 } from "react-native"
 import firestore from "@react-native-firebase/firestore";
 import { AuthContext } from "../Navigation/AuthProvider";
 import Divider from "../components/Divider";
-import { date } from "yup/lib/locale";
-
+ 
 const WalkingListScreen = ({ navigation }) => {
   const { user } = useContext(AuthContext);
   function Walks() {
@@ -47,7 +45,7 @@ const WalkingListScreen = ({ navigation }) => {
                 date: item.date,
               })}>
               <Text>{item.name}</Text>
-              <Text>{item.time} </Text>
+              <Text>{item.time}</Text>
             </TouchableOpacity>
             <Divider/>
           </View>

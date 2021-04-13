@@ -1,5 +1,5 @@
 export const dateHelper = (setDate, setTime, setDay) => {
-    console.log("hello");
+    //console.log("hello");
     var date = new Date().getDate(); //get current day of the month
     var month = new Date().getMonth() + 1; //get current Month
     var year = new Date().getFullYear(); // get current Year

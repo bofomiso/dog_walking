@@ -10,6 +10,7 @@ import {
 import { AuthContext } from "../Navigation/AuthProvider";
 import Divider from "../components/Divider"
 import HorizontalDogList from "../components/HorizontalDogList";
+import RecentWalk from "../components/RecentWalk";
 
 const HomeScreen = ({ navigation }) => {
   
@@ -22,6 +23,8 @@ const HomeScreen = ({ navigation }) => {
         <HorizontalDogList/>
       </View>
       <Divider/>
+      <Text style={styles.dogsText}>Recent walk</Text>
+      <RecentWalk/>
       <TouchableOpacity onPress={() => navigation.navigate("Walks")}>
         <Text style={styles.text}> Look at your walks!</Text>
       </TouchableOpacity>

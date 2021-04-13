@@ -34,7 +34,7 @@ export default function HorizontalDogList() {
       useEffect(() => {
         const subscriber = firestore()
           .collection("Dogs")
-          .where("user", "==", `${user.uid}` )
+          .where("user", "==", `${user.uid}`)
           .onSnapshot((querySnapshot) => {
             const dogs = [];
             querySnapshot.forEach(documentSnapshot => {

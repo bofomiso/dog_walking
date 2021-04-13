@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
 import firestore from "@react-native-firebase/firestore";
-import { AuthContext } from "./AuthProvider";
 
 export const MapContext = createContext();
 
@@ -24,6 +23,7 @@ export const MapProvider = ({ children }) => {
                 date: currentDate,
                 timeOfDay: currentTime,
                 dayOfWeek: day,
+                createdAt: firestore.FieldValue.serverTimestamp(),
               })
       },
         }}
