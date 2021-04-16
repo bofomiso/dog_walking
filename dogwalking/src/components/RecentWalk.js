@@ -11,7 +11,7 @@ export default function RecentWalk() {
   const { user } = useContext(AuthContext);
     const [recentWalk, setRecentWalk] = useState([]);
     const [pictureUri, setPictureUri] = useState(null);
-    const [dog, setDog] = useState(null);
+    const [dog, setDog] = useState("");
     useEffect(() => {
       const subscriber = firestore()
       .collection("Walks")
@@ -65,9 +65,7 @@ export default function RecentWalk() {
             {recentWalk.map((item, key) => 
             <Text key={key}>{ item.date }</Text>
             )}
-
           </View>
-
           <View style={styles.container}>
             <Text style={styles.underline}>Distance</Text>
             <Text>0.0 Miles</Text>

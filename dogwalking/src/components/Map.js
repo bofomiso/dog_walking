@@ -6,7 +6,7 @@ import { LocationContext } from "../Navigation/LocationProvider"
 
 export default function Map() {
   const { currentLocation, locations } = useContext(LocationContext)
-
+  //console.log(locations[locations.length-1]);
   if(!currentLocation) {
     return <ActivityIndicator size="large" style={{ marginTop: 200}} />;
   }

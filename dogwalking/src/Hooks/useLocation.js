@@ -6,9 +6,7 @@ import {
 } from "expo-location";
 
 export default (tracking, callback) => {
-  const [err, setErr] = useState(null); //determine if user allows location services
-  //const [subscriber, setSubscriber] = useState(null);
- 
+  const [err, setErr] = useState(null); //determine if user allows location services 
     //useEffect will run start tracking if tracking is true.
     useEffect(() => {
       let subscriber;

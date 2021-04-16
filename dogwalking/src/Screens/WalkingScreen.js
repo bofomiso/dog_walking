@@ -11,21 +11,16 @@ import { LocationContext } from "../Navigation/LocationProvider"
 import useLocation from "../Hooks/useLocation";
 import{ useIsFocused } from "@react-navigation/native";
 import WalkingButton from "../components/WalkingButton";
-import StopWatch from "../components/StopWatch";
-import Divider from "../components/Divider"
-import { MapContext } from "../Navigation/MapProvider";
-
+import Divider from "../components/Divider";
+import Distance from "../components/Distance";
 
 const WalkingScreen = ({ navigation, route }) => {
-  let times;
   const isFocused = useIsFocused(); //keep track if screen is focused 
-  const { recording, addLocation } = useContext(LocationContext);
+  const { recording, addLocation, setDistanceTraveled, setPrevLatLng } = useContext(LocationContext);
   const callback = useCallback(location => {
     addLocation(location, recording);
   }, [recording]);
   const [err] = useLocation(isFocused || recording, callback);
-  //console.log(currentTime);
-  // console.log(currentDate);
   return (
     <SafeAreaView style={{ flex: 1}}>
       <Map/>
@@ -38,9 +33,11 @@ const WalkingScreen = ({ navigation, route }) => {
       <View style={styles.container}>
         <Text styles={styles.chooseDog}> {route.params?.dog} it is </Text>
         {err ? <Text> Please enable location services</Text> : null}
-        {/* <StopWatch isStart={StopwatchStart} isReset={StopwatchReset} time={time} /> */}
       </View>
       <Divider/>
+      <Distance/>
+      {/* <Text> {distanceTraveled.toFixed(2)}</Text> */}
+
       <WalkingButton dogName={route.params?.dog} />
     </SafeAreaView>
   )
