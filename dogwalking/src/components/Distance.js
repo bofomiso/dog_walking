@@ -30,11 +30,12 @@ export default function Distance() {
       // console.log(prevLatLng);
       // console.log(distanceTraveled);
   return (
-    <View>
-        <Text>Wasssuppp</Text>
-        <Text> {distanceTraveled.toFixed(2)}</Text>
-    </View>
+        <Text style={styles.distanceText}>Distance: {distanceTraveled.toFixed(2)} miles</Text>
   )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  distanceText: {
+    fontSize: 25,
+  },
+})

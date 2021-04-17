@@ -31,13 +31,13 @@ const WalkingScreen = ({ navigation, route }) => {
       </View>
       <Divider/>
       <View style={styles.container}>
-        <Text styles={styles.chooseDog}> {route.params?.dog} it is </Text>
+        <Text styles={styles.chooseDog}> {route.params?.dog} It is </Text>
         {err ? <Text> Please enable location services</Text> : null}
       </View>
       <Divider/>
-      <Distance/>
-      {/* <Text> {distanceTraveled.toFixed(2)}</Text> */}
-
+      <View style={styles.container}>
+        <Distance/>
+      </View>
       <WalkingButton dogName={route.params?.dog} />
     </SafeAreaView>
   )

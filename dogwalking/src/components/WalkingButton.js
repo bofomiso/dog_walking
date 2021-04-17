@@ -35,7 +35,7 @@ export default function WalkingButton({ dogName }) {
   return (
     <>
       <View style={styles.stopWatchContainer}> 
-        <Text style={styles.clockText}> {formattedTime(time)}</Text>
+        <Text style={styles.clockText}>Time: {formattedTime(time)}</Text>
       </View>
       <View style={styles.row}>
         {recording ? (

@@ -9,35 +9,6 @@ import { MapContext } from "../Navigation/MapProvider";
 import useTimer from "../Hooks/useTimer";
 
 export default function StopWatch({isStart, isReset, time }) {
-  //const [time, setTime] = useState(0); //timer variable
-  // const { time } =  useTimer();
-  // const countRef = useRef(null);
-  // const handleStart = () => {
-  //   if(isStart = true) {
-  //     countRef.current = setInterval(() => {
-  //       setTime((time) => time + 1)
-  //     }, 1000)
-  //   }
-  // }
-
-  // const handlePause = () => {
-  //   clearInterval(countRef.current);
-    
-  // }
-
-  // const handleResume = () => {
-  //   if(isStart = true) {
-  //     countRef.current = setInterval(() => {
-  //       setTime((time) => time + 1)
-  //     }, 1000)
-  //   }
-  // }
-
-  // const handleReset = () => {
-  //   clearInterval(countRef.current);
-  //   setTime(0);
-  // }
-  //console.log(time);
   const formattedTime = (time) => {
     const getSeconds = `0${(time % 60)}`.slice(-2)
     const minutes = `${Math.floor(time / 60)}`
@@ -48,18 +19,8 @@ export default function StopWatch({isStart, isReset, time }) {
   }
   return (
     <View style={styles.container}> 
-      <Text style={styles.text}> {formattedTime(time)}</Text>
+      <Text style={styles.text}>Time: {formattedTime(time)}</Text>
     </View>
-    //   <Stopwatch
-    //   laps
-    //   msecs={false}
-    //   start={isStart}
-    //   reset={isReset}
-    //   options={options}
-    //   getTime={(time) => {
-    //     console.log(time);
-    //   }}
-    // />
   )
 }
 
