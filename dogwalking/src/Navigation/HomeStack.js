@@ -33,7 +33,7 @@ export default function HomeStack() {
       <Stack.Screen
         name="WalkDetails"
         component={WalkingDetailScreen}
-        options={{ headerShown: false }}
+        options={({ route }) => ({ title: route.params.dogName})}
       />
     </Stack.Navigator>
   );

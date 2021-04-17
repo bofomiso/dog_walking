@@ -8,8 +8,11 @@ import {
 } from "react-native"
 import firestore from "@react-native-firebase/firestore";
 import { AuthContext } from "../Navigation/AuthProvider";
-import Divider from "../components/Divider";
- 
+
+//dog name
+//distance
+//date
+//time
 const WalkingListScreen = ({ navigation }) => {
   const { user } = useContext(AuthContext);
   function Walks() {
@@ -43,11 +46,25 @@ const WalkingListScreen = ({ navigation }) => {
                 time: item.time,
                 currentTime: item.timeOfDay,
                 date: item.date,
+                dogName: item.name,
               })}>
-              <Text>{item.name}</Text>
-              <Text>{item.time}</Text>
+              <View style={styles.card}>
+                <View style={styles.cardContent}>
+                  <View style={styles.container}>
+                    <Text style={styles.underline}>Name</Text>
+                    <Text>{item.name}</Text>
+                    <Text style={styles.underline}>Date</Text>
+                    <Text>{item.date}</Text>
+                  </View>
+                  <View style={styles.container}>
+                    <Text style={styles.underline}>Distance</Text>
+                    <Text>0.00 Miles</Text>
+                    <Text style={styles.underline}>Time</Text>
+                    <Text>{item.time}</Text>
+                  </View>
+                </View>
+              </View>
             </TouchableOpacity>
-            <Divider/>
           </View>
         )}
       />
@@ -61,7 +78,35 @@ return (
 )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  card: {
+    borderRadius: 6,
+    elevation: 3,
+    backgroundColor: '#fff',
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowColor: "#333",
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    marginHorizontal: 4,
+    marginVertical: 6,
+  },
+  cardContent: {
+    marginTop: 5,
+    marginBottom: 5,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  },
+  underline: {
+    textDecorationLine: 'underline'
+  },
+  container: {
+    justifyContent: 'space-evenly'
+  }
+});
 
 
 export default WalkingListScreen

@@ -21,8 +21,6 @@ export default function RecentWalk() {
       .onSnapshot((querySnapshot) => {
         const walk = [];
         querySnapshot.forEach(documentSnapshot => {
-          // console.log(documentSnapshot.data());
-          //console.log(documentSnapshot.get("name").toString());
           setDog(documentSnapshot.get("name").toString());
           walk.push({
             ...documentSnapshot.data(),
@@ -39,8 +37,6 @@ export default function RecentWalk() {
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
-          //console.log(documentSnapshot.get("pictureUri"));
-          //pictureUri = documentSnapshot.get("pictureUri").toString();
           setPictureUri(documentSnapshot.get("pictureUri").toString());
         })
     })

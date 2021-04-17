@@ -50,11 +50,6 @@ const WalkingDetailsScreen = ({ route }) => {
         <Divider/>
         <Text style={styles.detailsText}>Distance: ---</Text>
         <Text style={styles.detailsText}>Time: {time}</Text>
-        {/* <Text> {name} </Text>
-        <Text> {day} </Text>
-        <Text> {time} </Text>
-        <Text> {currentTime} </Text>
-        <Text> {date} </Text> */}
     </SafeAreaView>
   )
 }
