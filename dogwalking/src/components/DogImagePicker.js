@@ -22,7 +22,6 @@ export default function DogImagePicker() {
         skipBackup: true
       }
     };
-
     launchImageLibrary(options, response => {
       if(response.didCancel) {
         Alert.alert("You did not select a image");
@@ -39,7 +38,6 @@ export default function DogImagePicker() {
       }
     });
   }
-
   return (
     <View>
       {imageSource === null ? (

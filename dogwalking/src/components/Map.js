@@ -10,6 +10,7 @@ export default function Map() {
   if(!currentLocation) {
     return <ActivityIndicator size="large" style={{ marginTop: 200}} />;
   }
+  
   return (
     <MapView
       style={styles.mapView}
@@ -33,6 +34,8 @@ export default function Map() {
 
 const styles = StyleSheet.create({
   mapView: {
-    height: '50%'
+    height: '50%',
+    overflow: 'hidden',
+    borderRadius: 20
   }
 });

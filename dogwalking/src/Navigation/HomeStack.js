@@ -14,7 +14,6 @@ export default function HomeStack() {
       <Stack.Screen
         name="Home"
         component={HomeScreen}
-        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Add Dog"

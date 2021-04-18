@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
   },
   dogsText: {
     fontSize: 25,
+    paddingTop: 5,
   },
 });
 export default HomeScreen;

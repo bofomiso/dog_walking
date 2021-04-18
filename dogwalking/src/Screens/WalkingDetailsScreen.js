@@ -9,7 +9,6 @@ const WalkingDetailsScreen = ({ route }) => {
   const { name, day, locations, time, currentTime, date } = route.params;
   const initialCoords = locations[0].coords;
   const { user } = useContext(AuthContext);
-  // var pictureUri = "";
   const [pictureUri, setPictureUri] = useState(null);
   firestore()
     .collection("Dogs")
@@ -22,7 +21,7 @@ const WalkingDetailsScreen = ({ route }) => {
     })
   return (
     <SafeAreaView style={styles.container}>
-        <Text>{date} - {currentTime}</Text>
+        <Text style={styles.date}>{date} - {currentTime}</Text>
         <Text style={styles.dayText}>{day}'s walk</Text>
         <Divider/>
         <MapView
@@ -40,6 +39,7 @@ const WalkingDetailsScreen = ({ route }) => {
               })}
             />
         </MapView>
+        <Divider/>
         <View style={styles.details}>
           <Image
             source={{ uri: pictureUri }}
@@ -48,8 +48,16 @@ const WalkingDetailsScreen = ({ route }) => {
           <Text style={styles.nameText}> Name: {name} </Text>
         </View>
         <Divider/>
-        <Text style={styles.detailsText}>Distance: ---</Text>
-        <Text style={styles.detailsText}>Time: {time}</Text>
+        <View style={styles.row}>
+          <View style={styles.stats}>
+            <Text style={styles.detailsText}>Distance</Text>
+            <Text style={styles.results}>0.00</Text>
+          </View>
+          <View style={styles.stats}>
+            <Text style={styles.detailsText}>Time</Text>
+            <Text style={styles.results}>{time}</Text>
+          </View>
+        </View>
     </SafeAreaView>
   )
 }
@@ -57,13 +65,14 @@ const WalkingDetailsScreen = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
       flex: 1,
-      marginLeft: 15,
   },
   dayText: {
-      fontSize: 30
+      fontSize: 30,
+      marginBottom: '1%',
   },
   mapView: {
       height: '50%',
+      marginTop: "2%"
   },
   details: {
     marginTop: 10,
@@ -73,15 +82,32 @@ const styles = StyleSheet.create({
   },
   nameText: {
     fontSize: 30,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   detailsText: {
     fontSize: 30,
+    textDecorationLine: 'underline'
   },
   pictureContainer: {
     width: 85,
     height: 85,
     borderRadius: 85/2,
+  },
+  date: {
+    marginTop: '1%'
+  },
+  row: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  },
+  stats: {
+    justifyContent: 'space-evenly',
+    marginTop: '1%',
+  },
+  results: {
+    fontSize: 30,
+    fontWeight: 'bold',
   },
 });
 

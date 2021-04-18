@@ -11,8 +11,6 @@ import firestore from "@react-native-firebase/firestore";
 import { AuthContext } from "../Navigation/AuthProvider";
 import { useNavigation } from "@react-navigation/native";
 
-
-
 export default function HorizontalDogList() {
   renderHeader = () => {
     return (

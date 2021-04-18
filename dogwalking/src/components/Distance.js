@@ -24,11 +24,6 @@ export default function Distance() {
           }, 1000);
           return () => clearInterval(interval);
     }, [setDistanceTraveled, distanceTraveled, prevLatLng, curLatLng, recording, locations, setPrevLatLng]);
-      // console.log("current Location");
-      // console.log(curLatLng);
-      // console.log("prevLocation");
-      // console.log(prevLatLng);
-      // console.log(distanceTraveled);
   return (
         <Text style={styles.distanceText}>Distance: {distanceTraveled.toFixed(2)} miles</Text>
   )

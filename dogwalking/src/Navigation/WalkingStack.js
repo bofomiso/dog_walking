@@ -13,7 +13,6 @@ export default function WalkingStack() {
       <Stack.Screen
         name="Walking"
         component={WalkingScreen}
-        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Choose Dog"

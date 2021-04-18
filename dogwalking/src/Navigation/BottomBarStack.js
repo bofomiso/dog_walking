@@ -34,15 +34,6 @@ export default function BottomBarStack() {
           ),
         }}
       />
-      {/* <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <FontAwesomeIcon name="user" color={color} size={25} />
-          ),
-        }}
-      /> */}
     </Tab.Navigator>
   );
 }

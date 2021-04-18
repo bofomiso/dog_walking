@@ -21,6 +21,7 @@ export default function WalkingButton({ dogName }) {
     setDay,
     setLocations,
     setPrevLatLng,
+    setDistanceTraveled,
   } = useContext(LocationContext);
   const [disableButton, setDisableButton] =  useState(true);
   const { time, handleStart, handlePause, handleResume, handleReset, } = useTimer();
@@ -59,7 +60,6 @@ export default function WalkingButton({ dogName }) {
             else{
               dateHelper(setCurrentDate, setCurrentTime, setDay);
               startTracking();
-              //calcDistance();
               handleStart();
             }
           }}
@@ -78,6 +78,7 @@ export default function WalkingButton({ dogName }) {
                 //saveMap(dogName, formattedTime(time));
                 setLocations([]);
                 setPrevLatLng(0.00);
+                setDistanceTraveled(0.00);
                 handleReset();
               }
             }}
