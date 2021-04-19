@@ -20,7 +20,6 @@ export default function Distance() {
                 setDistanceTraveled(distanceTraveled + haversine(prevLatLng, curLatLng, {unit: "mile"})|| 0);
               }
             }
-            // console.log("hello");
           }, 1000);
           return () => clearInterval(interval);
     }, [setDistanceTraveled, distanceTraveled, prevLatLng, curLatLng, recording, locations, setPrevLatLng]);
@@ -31,6 +30,6 @@ export default function Distance() {
 
 const styles = StyleSheet.create({
   distanceText: {
-    fontSize: 25,
+    fontSize: 15,
   },
 })

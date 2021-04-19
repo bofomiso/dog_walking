@@ -9,12 +9,9 @@ import {
 import firestore from "@react-native-firebase/firestore";
 import { AuthContext } from "../Navigation/AuthProvider";
 
-//dog name
-//distance
-//date
-//time
 const WalkingListScreen = ({ navigation }) => {
   const { user } = useContext(AuthContext);
+  const [pictureUri, setPictureUri] = useState(null);
   function Walks() {
     const [walk, setWalk] = useState([]);
     useEffect(() => {
@@ -33,6 +30,7 @@ const WalkingListScreen = ({ navigation }) => {
       });
       return () => subscriber();
     }, []);
+    
     return (
       <FlatList
         data={walk}

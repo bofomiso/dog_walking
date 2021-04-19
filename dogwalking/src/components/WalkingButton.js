@@ -110,22 +110,18 @@ const styles = StyleSheet.create({
   },
   row: {
     flex: 1,
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
     alignItems: 'flex-end',
     flexDirection: 'row',
     marginBottom: 10,
   },
   stopWatchContainer: {
-    // backgroundColor: '#1f6aba',
-    padding: 5,
-    borderRadius: 5,
-    // width: 200,
-    alignItems: 'center',
-    marginBottom: 10
-    
+    marginTop: '1%',
+    marginBottom: '1%',
+    marginLeft: 10
   },
   clockText: {
-    fontSize: 25,
+    fontSize: 15,
     color: "black",
   },
 

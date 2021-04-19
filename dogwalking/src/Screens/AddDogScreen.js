@@ -100,18 +100,6 @@ const AddDogScreen = ({navigation}) => {
                   });
                 })
             })
-          // await firestore()
-          // .collection("Dogs")
-          // .add({
-          //   user: user.uid,
-          //   name: values.name,
-          //   age: values.age,
-          //   breed: values.breed,
-          //   pictureUri: url,
-          // })
-          // .then(() => {
-          //   console.log("Dog added!");
-          // });
       }}
       >
         {(props) => (

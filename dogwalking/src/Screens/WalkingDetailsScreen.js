@@ -51,7 +51,7 @@ const WalkingDetailsScreen = ({ route }) => {
         <View style={styles.row}>
           <View style={styles.stats}>
             <Text style={styles.detailsText}>Distance</Text>
-            <Text style={styles.results}>0.00</Text>
+            <Text style={styles.results}>0.00 miles</Text>
           </View>
           <View style={styles.stats}>
             <Text style={styles.detailsText}>Time</Text>
