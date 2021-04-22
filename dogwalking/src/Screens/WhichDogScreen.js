@@ -14,6 +14,7 @@ import { AuthContext } from "../Navigation/AuthProvider";
 const WhichDogScreen = ({ navigation, route }) => {
   const [dogName, setDogName] =  useState();
   const { user } = useContext(AuthContext);
+  const [pictureUri, setPictureUri] = useState(null);
 
   const chooseDog = (dog) => {
     setDogName(dog);

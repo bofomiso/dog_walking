@@ -181,13 +181,6 @@ const AddDogScreen = ({navigation}) => {
                     ))}            
                   />
                 </View>
-                {/* <Input
-                  placeholder="Breed.."
-                  onChangeText={props.handleChange("breed")}
-                  value={props.values.breed}
-                  onBlur={props.handleBlur("breed")}
-                >
-                </Input> */}
                 <Text style={styles.errorText}> {props.touched.breed && props.errors.breed} </Text>
                 <TouchableOpacity 
                   style={styles.dogButton} 

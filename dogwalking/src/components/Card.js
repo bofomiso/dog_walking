@@ -7,6 +7,7 @@ import {
   TouchableOpacity
  } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import FastImage from "react-native-fast-image";
 
 export default function Card({ name, age, breed, pictureUri, setDog }) {
   const navigation = useNavigation();
@@ -15,10 +16,13 @@ export default function Card({ name, age, breed, pictureUri, setDog }) {
       <TouchableOpacity onPress={
         () => {
           setDog(name); 
-          navigation.navigate("Walking", { dog: name })}}>
+          navigation.navigate("Walking", { dog: name, pictureUri: pictureUri })}}>
         <View style={styles.cardContent}>
-            <Image
-              source={{ uri: pictureUri }}
+            <FastImage
+              source={{ 
+                uri: pictureUri, 
+                priority: FastImage.priority.low
+              }}
               style={styles.pictureContainer}
             />
               <View style={styles.row}>

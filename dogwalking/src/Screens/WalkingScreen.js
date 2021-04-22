@@ -14,6 +14,7 @@ import WalkingButton from "../components/WalkingButton";
 import Divider from "../components/Divider";
 import Distance from "../components/Distance";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import FastImage from "react-native-fast-image";
 
 const WalkingScreen = ({ navigation, route }) => {
   const isFocused = useIsFocused(); //keep track if screen is focused 
@@ -32,8 +33,17 @@ const WalkingScreen = ({ navigation, route }) => {
       </TouchableOpacity>
       <Divider/>
       <View style={styles.showDog}>
-        <View style={styles.circle}>
-        </View>
+        {typeof route.params?.pictureUri === "undefined" ? (
+          <View style={styles.circle}/>
+        ) : (
+          <FastImage
+            source= {{
+              uri: route.params.pictureUri, 
+              priority: FastImage.priority.low
+            }}
+            style={styles.pictureContainer}
+          />
+        )}
         <Text styles={styles.dogText}> {route.params?.dog} It is </Text>
         {err ? <Text> Please enable location services</Text> : null}
       </View>
@@ -86,6 +96,14 @@ const styles = StyleSheet.create({
   showDog: {
     flexDirection: 'row',
     alignItems: 'center'
+  },
+  pictureContainer: {
+    width: 60,
+    height: 60,
+    borderRadius: 60 / 2,
+    marginTop: '1%',
+    marginBottom: '1%',
+    marginLeft: 10,
   }
 });
 
