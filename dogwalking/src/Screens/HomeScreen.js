@@ -1,16 +1,16 @@
-import React, { useContext, useState} from "react";
+import React, { useContext } from "react";
 import {
    Text, 
    View, 
    StyleSheet, 
    TouchableOpacity,
    SafeAreaView,
-   Image, 
 } from "react-native";
 import { AuthContext } from "../Navigation/AuthProvider";
 import Divider from "../components/Divider"
 import HorizontalDogList from "../components/HorizontalDogList";
 import RecentWalk from "../components/RecentWalk";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 const HomeScreen = ({ navigation }) => {
   const { logout } = useContext(AuthContext);
@@ -25,9 +25,12 @@ const HomeScreen = ({ navigation }) => {
       <Divider/>
       <Text style={styles.dogsText}>Recent walk</Text>
       <RecentWalk/>
-      <TouchableOpacity onPress={() => navigation.navigate("Walks")}>
+      <Divider/>
+      <TouchableOpacity style={styles.chooseWalk} onPress={() => navigation.navigate("Walks")}>
         <Text style={styles.text}> Look at your walks!</Text>
+        <FontAwesome5  style={styles.icon} name="chevron-right" size={20}/>
       </TouchableOpacity>
+      <Divider/>
       <TouchableOpacity onPress={() => logout()}>
         <Text style={styles.text}> Logout </Text>
       </TouchableOpacity>
@@ -40,7 +43,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   text: {
-    padding: 20
+    fontSize: 15,
+    marginTop: '1%',
+    marginBottom: '1%',
+    marginLeft: 10,
   },
   circle: {
     width: 85,
@@ -62,5 +68,15 @@ const styles = StyleSheet.create({
     height: 85,
     borderRadius: 85/2,
   },
+  chooseWalk: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  icon: {
+    marginTop: '1%',
+    marginBottom:'1%',
+    marginRight: 10,
+  }
 });
 export default HomeScreen;
