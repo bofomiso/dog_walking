@@ -51,7 +51,7 @@ export default function HorizontalDogList() {
           horizontal={true}
           ListHeaderComponent={renderHeader()}
           renderItem={({item}) => (
-            <View style={styles.list}>
+            <View>
               <Image
                 source={{ uri: item.pictureUri }}
                 style={styles.pictureContainer}
@@ -71,7 +71,8 @@ const styles = StyleSheet.create({
   pictureContainer: {
     width: 85,
     height: 85,
-    borderRadius: 85/2,
+    borderRadius: 85 / 2,
+    margin: 4,
   },
   circle: {
     width: 85,
@@ -89,6 +90,6 @@ const styles = StyleSheet.create({
     fontSize: 25
   },
   list: {
-    margin: 4
+
   }
 })

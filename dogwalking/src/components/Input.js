@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         marginTop: 5,
         justifyContent: 'center',
-        padding: 20
+        padding: 15
       },
       inputText: {
         height: 50,

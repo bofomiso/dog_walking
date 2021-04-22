@@ -18,6 +18,8 @@ import firestore from "@react-native-firebase/firestore";
 import storage from "@react-native-firebase/storage";
 import { AuthContext } from "../Navigation/AuthProvider";
 import { Platform } from "react-native";
+import { DogBreeds } from "../utils/DogBreeds";
+import RNPickerSelect from 'react-native-picker-select';
 
 const AddSchema = yup.object({
   name: yup
@@ -37,18 +39,18 @@ const AddSchema = yup.object({
 const AddDogScreen = ({navigation}) => {
   const [imageSource, setImageSource] = useState(null);
   const { user } = useContext(AuthContext);
+  const breeds = DogBreeds();
+
   function selectImage() {
     let options = {
       quality: 1.0,
-      maxWidth: 200,
-      maxHeight: 200,
+      maxWidth: 500,
+      maxHeight: 500,
       mediaType: "photo",
       storageOptions: {
         skipBackup: true
-        
       }
     };
-
     launchImageLibrary(options, response => {
       if(response.didCancel) {
         Alert.alert("You did not select a image");
@@ -60,46 +62,61 @@ const AddDogScreen = ({navigation}) => {
         console.log("User tapped custom button: ", response.customButton);
       }
       else {
-
         let source = { uri: response.uri };
         setImageSource(source.uri);
       }
     });
   }
-
   return (
     <View>
       <Formik
         initialValues={{ name: "", age: "", breed: "" }}
         validationSchema={AddSchema}
         onSubmit={async(values) => {
-          let imageName = user.uid + " " + values.name;
-          let uri = imageSource;
-          let uploadUri = Platform.OS === "ios" ? uri.replace("file://", '') : uri;
+          if(imageSource) {
+            var uri = imageSource;
+            var imageName = user.uid + " " + values.name;
+            var uploadUri = Platform.OS === "ios" ? uri.replace("file://", '') : uri;
             await storage()
             .ref(imageName)
             .putFile(uploadUri)
-            .then((snapshot) => {
+            .then(async (snapshot) => {
               console.log("Image has been uploaded");
-              return storage()
+              const url = await storage()
                 .ref(imageName)
-                .getDownloadURL()
-                .then(url => {
-                  console.log(url);
-                  firestore()
-                  .collection("Dogs")
-                  .add({
-                    user: user.uid,
-                    name: values.name,
-                    age: values.age,
-                    breed: values.breed,
-                    pictureUri: url,
-                  })
-                  .then(() => {
-                    console.log("Dog added!");
-                  });
+                .getDownloadURL();
+              console.log(url);
+              firestore()
+                .collection("Dogs")
+                .add({
+                  user: user.uid,
+                  name: values.name,
+                  age: values.age,
+                  breed: values.breed,
+                  pictureUri: url,
                 })
+                .then(() => {
+                  console.log("Dog added!");
+                });
             })
+          }
+          else {
+            var uri = await storage()
+              .ref('default/default.png')
+              .getDownloadURL();
+              await firestore()
+              .collection("Dogs")
+              .add({
+                user: user.uid,
+                name: values.name,
+                age: values.age,
+                breed: values.breed,
+                pictureUri: uri,
+              })
+              .then(() => {
+                console.log("Dog added!");
+              });
+          }
       }}
       >
         {(props) => (
@@ -110,7 +127,7 @@ const AddDogScreen = ({navigation}) => {
             <View style={styles.container}>
               <View>
                 {imageSource === null ? (
-                  <TouchableOpacity onPress={selectImage}>
+                  <TouchableOpacity onPress={() => selectImage()}>
                     <View style={styles.circle}>
                       <Text> Add picture </Text>
                     </View>
@@ -124,7 +141,7 @@ const AddDogScreen = ({navigation}) => {
                   </TouchableOpacity>
                 )}
               </View>
-              <Text style={styles.errorText}> {props.touched.name && props.errors.name} </Text>
+              <Text style={styles.errorText}> {props.touched.photo && props.errors.photo} </Text>
                 <Input
                   placeholder="Name.."
                   onChangeText={props.handleChange("name")}
@@ -142,18 +159,41 @@ const AddDogScreen = ({navigation}) => {
                 >
                 </Input>
                 <Text style={styles.errorText}> {props.touched.age && props.errors.age} </Text>
-                <Input
+                <View style={styles.pickerContainer}>
+                  <RNPickerSelect
+                    onValueChange={(value, index) => {
+                      props.setFieldTouched("breed", true)
+                      props.setFieldValue("breed", value)
+                    }}
+                    placeholder={{label: "Breed...", value: ""}}
+                    style={{
+                      ...pickerSelectStyles,
+                      placeholder: {
+                        color: '#003f5c',
+                      }
+                    }}
+                    items={breeds.map((item, index) => (
+                    {
+                      label: item,
+                      key: index,
+                      value: index,
+                    } 
+                    ))}            
+                  />
+                </View>
+                {/* <Input
                   placeholder="Breed.."
                   onChangeText={props.handleChange("breed")}
                   value={props.values.breed}
                   onBlur={props.handleBlur("breed")}
                 >
-                </Input>
+                </Input> */}
                 <Text style={styles.errorText}> {props.touched.breed && props.errors.breed} </Text>
                 <TouchableOpacity 
                   style={styles.dogButton} 
-                  onPress={() => {props.handleSubmit(); navigation.navigate("Home")}}
+                  onPress={() => {props.handleSubmit()}}
                 >
+                  {/* ; navigation.navigate("Home") */}
                   <Text style={styles.text}> Add Dog </Text>
                 </TouchableOpacity>
               </View>
@@ -165,6 +205,18 @@ const AddDogScreen = ({navigation}) => {
   )
 }
 
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    width: 330,
+    backgroundColor: '#D1D8Df',
+    borderRadius: 25,
+    height: 50,
+    marginBottom: 5,
+    marginTop: 5,
+    padding: 15
+  },
+});
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -172,7 +224,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column'
   },
-  input: {
+  inputIOS: {
     width: 330,
     backgroundColor: '#D1D8Df',
     borderRadius: 25,
@@ -218,6 +270,9 @@ const styles = StyleSheet.create({
     width: 300,
     height: 300,
   },
+  pickerContainer: {
+    justifyContent: 'center'
+  }
 });
 
 export default AddDogScreen;

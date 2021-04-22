@@ -1,11 +1,11 @@
-import React from "react";
-import { useContext } from "react";
+import React, { useContext, useState} from "react";
 import {
    Text, 
    View, 
    StyleSheet, 
    TouchableOpacity,
-   SafeAreaView, 
+   SafeAreaView,
+   Image, 
 } from "react-native";
 import { AuthContext } from "../Navigation/AuthProvider";
 import Divider from "../components/Divider"
@@ -13,8 +13,8 @@ import HorizontalDogList from "../components/HorizontalDogList";
 import RecentWalk from "../components/RecentWalk";
 
 const HomeScreen = ({ navigation }) => {
-  
   const { logout } = useContext(AuthContext);
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.dogsText}> Your dogs</Text>
@@ -56,6 +56,11 @@ const styles = StyleSheet.create({
   dogsText: {
     fontSize: 25,
     paddingTop: 5,
+  },
+  pictureContainer: {
+    width: 85,
+    height: 85,
+    borderRadius: 85/2,
   },
 });
 export default HomeScreen;
