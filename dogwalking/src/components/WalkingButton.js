@@ -23,7 +23,8 @@ export default function WalkingButton({ dogName }) {
     setPrevLatLng,
     setDistanceTraveled,
   } = useContext(LocationContext);
-  const [disableButton, setDisableButton] =  useState(true);
+  const [disableSave, setDisableSave] =  useState(true);
+  const [disableStart, setDisableStart] = useState(false);
   const { time, handleStart, handlePause, handleResume, handleReset, } = useTimer();
   const [saveMap] = useSaveMap();
   const formattedTime = (time) => {
@@ -33,31 +34,25 @@ export default function WalkingButton({ dogName }) {
     const getHours = `0${Math.floor(time / 3600)}`.slice(-2)
     return `${getHours}:${getMinutes}:${getSeconds}`
   }
+  const isDisabled = (isStart, isSave) => {
+    setDisableStart(isStart);
+    setDisableSave(isSave);
+  } 
   return (
     <>
       <View style={styles.stopWatchContainer}> 
         <Text style={styles.clockText}>Time: {formattedTime(time)}</Text>
       </View>
       <View style={styles.row}>
-        {recording ? (
           <TouchableOpacity
-          style={styles.circle} 
-          onPress={() => {
-            setDisableButton(false);
-            stopTracking();
-            handlePause();
-          }}
-          >
-            <Text style={styles.text}>Stop</Text>
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-          style={styles.circle} 
+          style={[styles.circle, disableStart ? styles.disableButton : styles.circle]}
+          disabled={disableStart ? true : false}
           onPress={() => {
             if(typeof dogName == 'undefined') {
               Alert.alert("You need to pick a dog before you can start a walk");
             }
             else{
+              isDisabled(true, false);
               dateHelper(setCurrentDate, setCurrentTime, setDay);
               startTracking();
               handleStart();
@@ -66,15 +61,17 @@ export default function WalkingButton({ dogName }) {
             >
               <Text style={styles.text}>Start</Text>
             </TouchableOpacity>
-          )}
+          {/* )} */}
           <TouchableOpacity 
-            style={styles.circle} 
-            disabled={disableButton ? true : false}
+            style={[styles.circle, disableSave ? styles.disableButton : styles.circle]} 
+            disabled={disableSave? true : false}
             onPress={() => {
               if(typeof dogName == 'undefined') {
                 Alert.alert("You did not pick a dog");
               }
               else{
+                isDisabled(false, true);
+                stopTracking();
                 //saveMap(dogName, formattedTime(time));
                 setLocations([]);
                 setPrevLatLng(0.00);
@@ -103,6 +100,14 @@ const styles = StyleSheet.create({
       backgroundColor: '#1f6aba',
       alignItems: 'center',        
       justifyContent: 'center',
+  },
+  disableButton: {
+    width: 100,
+    height: 100,
+    borderRadius: 100 / 2,
+    backgroundColor: '#D1D8Df',
+    alignItems: 'center',        
+    justifyContent: 'center',
   },
   text: {
       color: 'white',

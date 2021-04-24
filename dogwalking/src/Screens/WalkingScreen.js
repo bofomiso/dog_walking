@@ -27,10 +27,14 @@ const WalkingScreen = ({ navigation, route }) => {
     <SafeAreaView style={{ flex: 1}}>
       <Map/>
       <Divider/>
-      <TouchableOpacity style={styles.chooseDog} onPress={() => navigation.navigate("Choose Dog")}>
-        <Text style={styles.dogText}>Choose your dog</Text>
-        <FontAwesome5  style={styles.icon} name="chevron-right" size={20}/>
-      </TouchableOpacity>
+      {recording === true ? (
+        <View/>
+      ) : (
+        <TouchableOpacity style={styles.chooseDog} onPress={() => navigation.navigate("Choose Dog")}>
+          <Text style={styles.dogText}>Choose your dog</Text>
+          <FontAwesome5  style={styles.icon} name="chevron-right" size={20}/>
+        </TouchableOpacity>
+      )}
       <Divider/>
       <View style={styles.showDog}>
         {typeof route.params?.pictureUri === "undefined" ? (

@@ -6,11 +6,9 @@ import { LocationContext } from "../Navigation/LocationProvider"
 
 export default function Map() {
   const { currentLocation, locations } = useContext(LocationContext)
-  //console.log(locations[locations.length-1]);
   if(!currentLocation) {
     return <ActivityIndicator size="large" style={{ marginTop: 200}} />;
-  }
-  
+  }  
   return (
     <MapView
       style={styles.mapView}
@@ -36,6 +34,6 @@ const styles = StyleSheet.create({
   mapView: {
     height: '50%',
     overflow: 'hidden',
-    borderRadius: 20
+    // borderRadius: 20
   }
 });
