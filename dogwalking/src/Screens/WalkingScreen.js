@@ -24,7 +24,7 @@ const WalkingScreen = ({ navigation, route }) => {
   }, [recording]);
   const [err] = useLocation(isFocused || recording, callback);
   return (
-    <SafeAreaView style={{ flex: 1}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#303030' }}>
       <Map/>
       <Divider/>
       {recording === true ? (
@@ -52,9 +52,9 @@ const WalkingScreen = ({ navigation, route }) => {
         {err ? <Text> Please enable location services</Text> : null}
       </View>
       <Divider/>
-      <View style={styles.dogText}>
+      {/* <View style={styles.dogText}>
         <Distance/>
-      </View>
+      </View> */}
       <WalkingButton dogName={route.params?.dog} />
     </SafeAreaView>
   )
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#303030'
   },
   row: {
     flex: 1,
@@ -77,6 +78,7 @@ const styles = StyleSheet.create({
     marginTop: '1%',
     marginBottom: '1%',
     marginLeft: 10,
+    color: '#FFFF'
   },
   chooseDog: {
     flexDirection: 'row',
@@ -87,6 +89,7 @@ const styles = StyleSheet.create({
     marginTop: '1%',
     marginBottom:'1%',
     marginRight: 10,
+    color: '#fdd404'
   },
   circle: {
     width: 60,

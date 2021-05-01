@@ -13,8 +13,6 @@ export default () => {
       currentTime, 
       currentDate, 
       day,
-      
-
   } = useContext(LocationContext);
   const { user } = useContext(AuthContext);
 

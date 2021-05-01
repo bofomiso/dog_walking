@@ -70,13 +70,17 @@ const WalkingListScreen = ({ navigation }) => {
     )
   }
 return (
-  <View>
+  <View style={styles.backgroundContainer}>
     <Walks></Walks>
   </View>
 )
 }
 
 const styles = StyleSheet.create({
+  backgroundContainer: {
+    flex: 1,
+    backgroundColor: '#303030'
+  },
   card: {
     borderRadius: 6,
     elevation: 3,

@@ -56,7 +56,7 @@ const WhichDogScreen = ({ navigation, route }) => {
     );
   }
   return (
-      <View>
+      <View style={styles.container}>
           <Dogs></Dogs>
       </View>
   )
@@ -66,8 +66,7 @@ const WhichDogScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
       flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
+      backgroundColor: '#303030',
     },
   cardText: {
     fontSize: 20,

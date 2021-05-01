@@ -28,7 +28,12 @@ const HomeScreen = ({ navigation }) => {
       <Divider/>
       <TouchableOpacity style={styles.chooseWalk} onPress={() => navigation.navigate("Walks")}>
         <Text style={styles.text}> Look at your walks!</Text>
-        <FontAwesome5  style={styles.icon} name="chevron-right" size={20}/>
+        <FontAwesome5  
+          style={styles.icon}
+          color='#fdd404' 
+          name="chevron-right" 
+          size={20}
+        />
       </TouchableOpacity>
       <Divider/>
       <TouchableOpacity onPress={() => logout()}>
@@ -41,12 +46,14 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#303030'
   },
   text: {
     fontSize: 15,
     marginTop: '1%',
     marginBottom: '1%',
     marginLeft: 10,
+    color: '#D1D8Df'
   },
   circle: {
     width: 85,
@@ -62,6 +69,8 @@ const styles = StyleSheet.create({
   dogsText: {
     fontSize: 25,
     paddingTop: 5,
+    // color: '#FFFF',
+    color: '#D1D8Df'
   },
   pictureContainer: {
     width: 85,

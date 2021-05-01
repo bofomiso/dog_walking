@@ -31,5 +31,6 @@ export default function Distance() {
 const styles = StyleSheet.create({
   distanceText: {
     fontSize: 15,
+    color: '#FFFF'
   },
 })

@@ -52,11 +52,24 @@ export default function HorizontalDogList() {
           ListHeaderComponent={renderHeader()}
           renderItem={({item}) => (
             <View>
-              <Image
-                source={{ uri: item.pictureUri }}
-                style={styles.pictureContainer}
-              />
-              <Text style={styles.name}>{item.name}</Text>
+              <TouchableOpacity 
+                onPress={() => navigation.navigate("Profile",
+                {
+                  name: item.name,
+                  age: item.age,
+                  breed: item.breed,
+                  pictureUri: item.pictureUri,
+                  totalDistance: item.totalDistance,
+                  totalWalks: item.totalWalks
+                }
+                )}
+              >
+                <Image
+                  source={{ uri: item.pictureUri }}
+                  style={styles.pictureContainer}
+                />
+                <Text style={styles.name}>{item.name}</Text>
+              </TouchableOpacity>
             </View>
           )}
         />
@@ -84,7 +97,9 @@ const styles = StyleSheet.create({
     margin: 4
   },
   name: {
-    textAlign: 'center'
+    textAlign: 'center',
+    // color: '#FFFF',
+    color: '#D1D8Df'
   },
   plus: {
     fontSize: 25

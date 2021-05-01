@@ -13,12 +13,22 @@ export default function WalkingStack() {
       <Stack.Screen
         name="Walking"
         component={WalkingScreen}
+        options={{
+          headerStyle: {
+            backgroundColor: '#303030'
+          },
+          headerTintColor: '#FFFF',
+        }}
       />
       <Stack.Screen
         name="Choose Dog"
         component={WhichDogScreen}
         options={{ 
-          headerShown: Platform.OS === 'ios' ? true : false
+          headerShown: Platform.OS === 'ios' ? true : false,
+          headerStyle: {
+            backgroundColor: '#303030'
+          },
+          headerTintColor: '#FFFF',
         }}
       />
     </Stack.Navigator>

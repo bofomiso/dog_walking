@@ -31,9 +31,6 @@ const AddSchema = yup.object({
   breed: yup
     .string()
     .required("What breed is your dog?"),
-  // photo: yup
-  //   .object()
-  //   .required("A picture is required")
 })
 
 const AddDogScreen = ({navigation}) => {
@@ -68,7 +65,7 @@ const AddDogScreen = ({navigation}) => {
     });
   }
   return (
-    <View>
+    <View style={styles.screenContainer}>
       <Formik
         initialValues={{ name: "", age: "", breed: "" }}
         validationSchema={AddSchema}
@@ -94,6 +91,9 @@ const AddDogScreen = ({navigation}) => {
                   age: values.age,
                   breed: values.breed,
                   pictureUri: url,
+                  totalWalks: 0,
+                  totalDistance: 0.00,
+                  createdAt: firestore.FieldValue.serverTimestamp(),
                 })
                 .then(() => {
                   console.log("Dog added!");
@@ -166,6 +166,7 @@ const AddDogScreen = ({navigation}) => {
                       props.setFieldValue("breed", value)
                     }}
                     placeholder={{label: "Breed...", value: ""}}
+                    useNativeAndroidPickerStyle={false}
                     style={{
                       ...pickerSelectStyles,
                       placeholder: {
@@ -176,7 +177,7 @@ const AddDogScreen = ({navigation}) => {
                     {
                       label: item,
                       key: index,
-                      value: index,
+                      value: item,
                     } 
                     ))}            
                   />
@@ -208,28 +209,31 @@ const pickerSelectStyles = StyleSheet.create({
     marginTop: 5,
     padding: 15
   },
-});
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column'
-  },
-  inputIOS: {
+  inputAndroid: {
     width: 330,
     backgroundColor: '#D1D8Df',
     borderRadius: 25,
     height: 50,
     marginBottom: 5,
     marginTop: 5,
-    justifyContent: 'center',
-    padding: 20
+    padding: 15,
+    color: 'black'
+  }
+});
+
+const styles = StyleSheet.create({
+  screenContainer: {
+    flex: 1,
+    backgroundColor: '#303030'
+  },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    flexDirection: 'column'
   },
   dogButton: {
     width: 330,
-    backgroundColor: '#2e71b8',
+    backgroundColor: '#fdd404',
     borderRadius: 25,
     height: 50,
     alignItems: 'center',
@@ -238,7 +242,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   text: {
-    color: 'white',
+    color: 'black',
     fontSize: 16
   },
   inputText: {

@@ -10,6 +10,8 @@ import { LocationContext } from "../Navigation/LocationProvider";
 import useSaveMap from "../Hooks/useSaveMap";
 import useTimer from "../Hooks/useTimer";
 import { dateHelper } from "../utils/Helpers";
+import { formattedTime } from "../utils//FormattedTime";
+import Distance from "../components/Distance";
 
 export default function WalkingButton({ dogName }) {
   const { 
@@ -27,13 +29,6 @@ export default function WalkingButton({ dogName }) {
   const [disableStart, setDisableStart] = useState(false);
   const { time, handleStart, handlePause, handleResume, handleReset, } = useTimer();
   const [saveMap] = useSaveMap();
-  const formattedTime = (time) => {
-    const getSeconds = `0${(time % 60)}`.slice(-2)
-    const minutes = `${Math.floor(time / 60)}`
-    const getMinutes = `0${minutes % 60}`.slice(-2)
-    const getHours = `0${Math.floor(time / 3600)}`.slice(-2)
-    return `${getHours}:${getMinutes}:${getSeconds}`
-  }
   const isDisabled = (isStart, isSave) => {
     setDisableStart(isStart);
     setDisableSave(isSave);
@@ -42,6 +37,7 @@ export default function WalkingButton({ dogName }) {
     <>
       <View style={styles.stopWatchContainer}> 
         <Text style={styles.clockText}>Time: {formattedTime(time)}</Text>
+        <Distance/>
       </View>
       <View style={styles.row}>
           <TouchableOpacity
@@ -97,7 +93,7 @@ const styles = StyleSheet.create({
       width: 100,
       height: 100,
       borderRadius: 100 / 2,
-      backgroundColor: '#1f6aba',
+      backgroundColor: '#fdd404',
       alignItems: 'center',        
       justifyContent: 'center',
   },
@@ -110,8 +106,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-      color: 'white',
-      fontSize: 15
+    color: 'black',
+    fontSize: 15
   },
   row: {
     flex: 1,
@@ -123,11 +119,13 @@ const styles = StyleSheet.create({
   stopWatchContainer: {
     marginTop: '1%',
     marginBottom: '1%',
-    marginLeft: 10
+    marginLeft: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly'
   },
   clockText: {
     fontSize: 15,
-    color: "black",
+    color: "#FFFF",
   },
 
 });

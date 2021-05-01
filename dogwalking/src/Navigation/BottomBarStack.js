@@ -13,7 +13,11 @@ export default function BottomBarStack() {
     <Tab.Navigator
       initialRouteName="Home"
       tabBarOptions={{
-         keyboardHidesTabBar: true
+         keyboardHidesTabBar: true,
+         activeBackgroundColor: '#303030',
+         inactiveBackgroundColor: '#303030',
+         style: { backgroundColor: '#303030'},
+         activeTintColor: '#fdd404' 
       }}
     >
       <Tab.Screen
