@@ -48,7 +48,7 @@ const WalkingScreen = ({ navigation, route }) => {
             style={styles.pictureContainer}
           />
         )}
-        <Text styles={styles.dogText}> {route.params?.dog} It is </Text>
+        <Text style={styles.dogText}> {route.params?.dog} It is </Text>
         {err ? <Text> Please enable location services</Text> : null}
       </View>
       <Divider/>

@@ -55,19 +55,21 @@ export default function RecentWalk() {
           <View style={styles.container}>
             <Text style={styles.underline}>Day</Text>
             {recentWalk.map((item, key) => 
-              <Text key={key}>{ item.dayOfWeek }</Text>
+              <Text key={key} style={styles.text}>{ item.dayOfWeek }</Text>
             )}
             <Text style={styles.underline}>Date</Text>
             {recentWalk.map((item, key) => 
-            <Text key={key}>{ item.date }</Text>
+            <Text key={key} style={styles.text}>{ item.date }</Text>
             )}
           </View>
           <View style={styles.container}>
             <Text style={styles.underline}>Distance</Text>
-            <Text>0.0 Miles</Text>
+            {recentWalk.map((item, key) => 
+            <Text key={key} style={styles.text}>{ item.distance.toFixed(2) } miles</Text>
+            )}
             <Text style={styles.underline}>Time</Text>
             {recentWalk.map((item, key) => 
-            <Text key={key}>{ item.time }</Text>
+            <Text key={key} style={styles.text}>{ item.time }</Text>
             )}
           </View>
         </View>
@@ -81,7 +83,7 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: 6,
     elevation: 3,
-    backgroundColor: '#fff',
+    backgroundColor: '#505050',
     shadowOffset: {
       width: 1,
       height: 1,
@@ -90,17 +92,18 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 2,
     marginHorizontal: 4,
-    marginVertical: 6,
+    marginVertical: 4,
   },
   cardContent: {
-    marginTop: 5,
-    marginBottom: 5,
+    marginTop: '1%',
+    marginBottom: '1%',
     flexWrap: 'wrap',
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   underline: {
-    textDecorationLine: 'underline'
+    textDecorationLine: 'underline',
+    color: '#D1D8DF'
   },
   pictureContainer: {
     width: 85,
@@ -108,9 +111,13 @@ const styles = StyleSheet.create({
     borderRadius: 85/2,
   },
   name: {
-    textAlign: 'center'
+    textAlign: 'center',
+    color: '#D1D8Df'
   },
   container: {
     justifyContent: 'space-evenly'
   },
+  text: {
+    color: '#D1D8DF'
+  }
 });

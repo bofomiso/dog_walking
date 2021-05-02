@@ -11,7 +11,7 @@ export const MapProvider = ({ children }) => {
       getMap: async () => {
         
       },
-      createMap: async (locations, dogName, time, userId, currentDate, currentTime, day) => {
+      createMap: async (locations, dogName, time, userId, currentDate, currentTime, day, distanceTraveled) => {
               //make request to firebase
               await firestore()
               .collection("Walks")
@@ -23,6 +23,7 @@ export const MapProvider = ({ children }) => {
                 date: currentDate,
                 timeOfDay: currentTime,
                 dayOfWeek: day,
+                distance: distanceTraveled,
                 createdAt: firestore.FieldValue.serverTimestamp(),
               })
       },

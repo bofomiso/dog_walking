@@ -13,7 +13,7 @@ export default function Input({ placeholder, onChangeText, value, onBlur, keyboa
             <TextInput
                 style={styles.inputText}
                 placeholder={placeholder}
-                placeholderTextColor='#003f5c'
+                placeholderTextColor='#D1D8DF'
                 onChangeText={onChangeText}
                 value={value}
                 onBlur={onBlur}
@@ -26,7 +26,7 @@ export default function Input({ placeholder, onChangeText, value, onBlur, keyboa
 const styles = StyleSheet.create({
     input: {
         width: 330,
-        backgroundColor: '#D1D8Df',
+        backgroundColor: '#505050',
         borderRadius: 25,
         height: 50,
         marginBottom: 5,
@@ -36,6 +36,6 @@ const styles = StyleSheet.create({
       },
       inputText: {
         height: 50,
-        color: 'black'
+        color: '#D1D8DF'
       },
 });

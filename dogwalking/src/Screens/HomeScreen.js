@@ -17,7 +17,7 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.dogsText}> Your dogs</Text>
+      <Text style={styles.dogsText}>Your dogs</Text>
       <Divider/>
       <View style={styles.horizontal}>
         <HorizontalDogList/>
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginTop: '1%',
     marginBottom: '1%',
-    marginLeft: 10,
+    marginLeft: '1%',
     color: '#D1D8Df'
   },
   circle: {
@@ -69,8 +69,8 @@ const styles = StyleSheet.create({
   dogsText: {
     fontSize: 25,
     paddingTop: 5,
-    // color: '#FFFF',
-    color: '#D1D8Df'
+    color: '#D1D8Df',
+    marginLeft: '1%'
   },
   pictureContainer: {
     width: 85,

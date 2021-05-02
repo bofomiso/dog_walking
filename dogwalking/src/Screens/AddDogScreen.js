@@ -129,7 +129,7 @@ const AddDogScreen = ({navigation}) => {
                 {imageSource === null ? (
                   <TouchableOpacity onPress={() => selectImage()}>
                     <View style={styles.circle}>
-                      <Text> Add picture </Text>
+                      <Text style={styles.circleText}> Add picture </Text>
                     </View>
                   </TouchableOpacity>
                 ) : (
@@ -170,7 +170,7 @@ const AddDogScreen = ({navigation}) => {
                     style={{
                       ...pickerSelectStyles,
                       placeholder: {
-                        color: '#003f5c',
+                        color: '#D1D8DF',
                       }
                     }}
                     items={breeds.map((item, index) => (
@@ -202,22 +202,23 @@ const AddDogScreen = ({navigation}) => {
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
     width: 330,
-    backgroundColor: '#D1D8Df',
-    borderRadius: 25,
-    height: 50,
-    marginBottom: 5,
-    marginTop: 5,
-    padding: 15
-  },
-  inputAndroid: {
-    width: 330,
-    backgroundColor: '#D1D8Df',
+    backgroundColor: '#505050',
     borderRadius: 25,
     height: 50,
     marginBottom: 5,
     marginTop: 5,
     padding: 15,
-    color: 'black'
+    color: '#D1D8DF'
+  },
+  inputAndroid: {
+    width: 330,
+    backgroundColor: '#505050',
+    borderRadius: 25,
+    height: 50,
+    marginBottom: 5,
+    marginTop: 5,
+    padding: 15,
+    color: '#D1D8DF'
   }
 });
 
@@ -257,11 +258,14 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     borderRadius: 200 / 2,
-    backgroundColor: '#D1D8Df',
+    backgroundColor: '#505050',
     marginTop: 50,
     marginBottom: 20,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  circleText: {
+    color: '#D1D8DF',
   },
   imageContainer: {
     width: 300,

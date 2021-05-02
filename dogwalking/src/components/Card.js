@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: 6,
     elevation: 3,
-    backgroundColor: '#fff',
+    backgroundColor: '#505050',
     shadowOffset: {
       width: 1,
       height: 1,
@@ -64,7 +64,8 @@ const styles = StyleSheet.create({
   },
   cardText: {
     fontSize: 20,
-    padding: 5
+    padding: 5,
+    color: '#D1D8DF'
   },
   row: {
     flex: 1,
