@@ -5,15 +5,18 @@ import {
   View,
   FlatList,
   TouchableOpacity,
+  Image,
 } from "react-native"
 import firestore from "@react-native-firebase/firestore";
 import { AuthContext } from "../Navigation/AuthProvider";
 
 const WalkingListScreen = ({ navigation }) => {
   const { user } = useContext(AuthContext);
-  const [pictureUri, setPictureUri] = useState(null);
   function Walks() {
     const [walk, setWalk] = useState([]);
+    const [dog, setDog] = useState([]);
+    const [pictureUri, setPictureUri] = useState([]);
+    var curDog;
     useEffect(() => {
       const subscriber = firestore()
       .collection("Walks")
@@ -21,6 +24,9 @@ const WalkingListScreen = ({ navigation }) => {
       .onSnapshot((querySnapshot) => {
         const walks = [];
         querySnapshot.forEach(documentSnapshot => {
+          //check for array later
+          // setDog(documentSnapshot.get("name").toString());
+          // setDog(dog => [...dog, documentSnapshot.get("name").toString()]);
           walks.push({
             ...documentSnapshot.data(),
             key: documentSnapshot.id,
@@ -30,11 +36,25 @@ const WalkingListScreen = ({ navigation }) => {
       });
       return () => subscriber();
     }, []);
-    
+    // for(let i = 0; i < dog.length; i++) {
+    //   console.log(i);
+    //   curDog = dog[i];
+    //   console.log(curDog);
+    //   firestore()
+    //   .collection("Dogs")
+    //   .where("user", "==", `${user.uid}`).where("name", "==", `${curDog}`)
+    //   .get()
+    //   .then(querySnapshot => {
+    //     querySnapshot.forEach(documentSnapshot => {
+    //       setPictureUri(pictureUri => [...pictureUri, documentSnapshot.get("pictureUri").toString()]);
+    //     })
+    //   })
+    // }
     return (
       <FlatList
         data={walk}
-        renderItem={({item}) => (
+        extraData={pictureUri}
+        renderItem={({item, index}) => (
           <View>
             <TouchableOpacity onPress={
               () => navigation.navigate("WalkDetails", {
@@ -45,23 +65,25 @@ const WalkingListScreen = ({ navigation }) => {
                 currentTime: item.timeOfDay,
                 date: item.date,
                 dogName: item.name,
+                distance: item.distance
               })}>
               <View style={styles.card}>
                 <View style={styles.cardContent}>
                   <View style={styles.container}>
                     <Text style={styles.underline}>Name</Text>
-                    <Text>{item.name}</Text>
+                    <Text style={styles.textColor}>{item.name}</Text>
                     <Text style={styles.underline}>Date</Text>
-                    <Text>{item.date}</Text>
+                    <Text style={styles.textColor}>{item.date}</Text>
                   </View>
                   <View style={styles.container}>
                     <Text style={styles.underline}>Distance</Text>
-                    <Text>0.00 Miles</Text>
+                    <Text style={styles.textColor}>{item.distance.toFixed(2)}</Text>
                     <Text style={styles.underline}>Time</Text>
-                    <Text>{item.time}</Text>
+                    <Text style={styles.textColor}>{item.time}</Text>
                   </View>
                 </View>
               </View>
+              <Text>{pictureUri[index]}</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -84,7 +106,7 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: 6,
     elevation: 3,
-    backgroundColor: '#fff',
+    backgroundColor: '#505050',
     shadowOffset: {
       width: 1,
       height: 1,
@@ -103,11 +125,20 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around'
   },
   underline: {
-    textDecorationLine: 'underline'
+    textDecorationLine: 'underline',
+    color: '#D1D8Df'
   },
   container: {
     justifyContent: 'space-evenly'
-  }
+  },
+  textColor: {
+    color: '#D1D8Df'
+  },
+  pictureContainer: {
+    width: 85,
+    height: 85,
+    borderRadius: 85/2,
+  },
 });
 
 

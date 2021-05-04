@@ -91,20 +91,17 @@ const styles = StyleSheet.create({
     width: 85,
     height: 85,
     borderRadius: 85 / 2,
-    backgroundColor: '#D1D8Df',
+    backgroundColor: '#505050',
     alignItems: 'center',
     justifyContent: 'center',
     margin: 4
   },
   name: {
     textAlign: 'center',
-    // color: '#FFFF',
     color: '#D1D8Df'
   },
   plus: {
-    fontSize: 25
+    fontSize: 25,
+    color: '#D1D8Df'
   },
-  list: {
-
-  }
 })

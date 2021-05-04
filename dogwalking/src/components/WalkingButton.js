@@ -68,10 +68,10 @@ export default function WalkingButton({ dogName }) {
               else{
                 isDisabled(false, true);
                 stopTracking();
-                //saveMap(dogName, formattedTime(time));
-                setLocations([]);
-                setPrevLatLng(0.00);
-                setDistanceTraveled(0.00);
+                saveMap(dogName, formattedTime(time));
+                // setLocations([]);
+                // setPrevLatLng(0.00);
+                // setDistanceTraveled(0.00);
                 handleReset();
               }
             }}

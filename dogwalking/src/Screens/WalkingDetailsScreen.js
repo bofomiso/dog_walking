@@ -6,7 +6,7 @@ import firestore from "@react-native-firebase/firestore";
 import { AuthContext } from "../Navigation/AuthProvider";
 
 const WalkingDetailsScreen = ({ route }) => {
-  const { name, day, locations, time, currentTime, date } = route.params;
+  const { name, day, locations, time, currentTime, date, distance } = route.params;
   const initialCoords = locations[0].coords;
   const { user } = useContext(AuthContext);
   const [pictureUri, setPictureUri] = useState(null);
@@ -32,7 +32,8 @@ const WalkingDetailsScreen = ({ route }) => {
             latitudeDelta: 0.01,
           }}
         >
-            <Polyline 
+            <Polyline
+              strokeColor='#fdd404' 
               coordinates={locations.map(loc => {
                 const {latitude, longitude} = loc.coords;
                 return {latitude, longitude}
@@ -51,7 +52,7 @@ const WalkingDetailsScreen = ({ route }) => {
         <View style={styles.row}>
           <View style={styles.stats}>
             <Text style={styles.detailsText}>Distance</Text>
-            <Text style={styles.results}>0.00 miles</Text>
+            <Text style={styles.results}>{distance.toFixed(2)} miles</Text>
           </View>
           <View style={styles.stats}>
             <Text style={styles.detailsText}>Time</Text>
@@ -65,10 +66,12 @@ const WalkingDetailsScreen = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
       flex: 1,
+      backgroundColor: '#303030'
   },
   dayText: {
       fontSize: 30,
       marginBottom: '1%',
+      color: '#D1D8Df'
   },
   mapView: {
       height: '50%',
@@ -83,10 +86,12 @@ const styles = StyleSheet.create({
   nameText: {
     fontSize: 30,
     textAlign: 'center',
+    color: '#D1D8Df'
   },
   detailsText: {
     fontSize: 30,
-    textDecorationLine: 'underline'
+    textDecorationLine: 'underline',
+    color: '#D1D8Df'
   },
   pictureContainer: {
     width: 85,
@@ -94,7 +99,8 @@ const styles = StyleSheet.create({
     borderRadius: 85/2,
   },
   date: {
-    marginTop: '1%'
+    marginTop: '1%',
+    color: '#D1D8Df'
   },
   row: {
     flexWrap: 'wrap',
@@ -108,6 +114,7 @@ const styles = StyleSheet.create({
   results: {
     fontSize: 30,
     fontWeight: 'bold',
+    color: '#D1D8Df'
   },
 });
 

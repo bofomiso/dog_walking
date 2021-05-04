@@ -44,7 +44,7 @@ const RegisterScreen = ({ navigation }) => {
                 <TextInput
                   style={styles.input_Text}
                   placeholder="Email..."
-                  placeholderTextColor='#003f5c'
+                  placeholderTextColor='#D1D8Df'
                   onChangeText={props.handleChange("email")}
                   value={props.values.email}
                   onBlur={props.handleBlur("email")}
@@ -55,7 +55,7 @@ const RegisterScreen = ({ navigation }) => {
                 <TextInput
                   style={styles.input_Text}
                   placeholder="Password..."
-                  placeholderTextColor="#003f5c"
+                  placeholderTextColor="#D1D8Df"
                   secureTextEntry
                   onChangeText={props.handleChange("password")}
                   value={props.values.password}
@@ -82,15 +82,17 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#303030'
   },
   logo: {
     fontWeight: 'bold',
     fontSize: 50,
-    marginBottom: 40
+    marginBottom: 40,
+    color: '#D1D8Df'
   },
   input: {
     width: 330,
-    backgroundColor: '#D1D8Df',
+    backgroundColor: '#505050',
     borderRadius: 25,
     height: 50,
     marginBottom: 5,
@@ -100,11 +102,11 @@ const styles = StyleSheet.create({
   },
   input_Text: {
     height: 50,
-    color: 'black'
+    color: '#D1D8Df'
   },
   login_Button: {
     width: 330,
-    backgroundColor: '#2e71b8',
+    backgroundColor: '#fdd404',
     borderRadius: 25,
     height: 50,
     alignItems: 'center',
@@ -113,7 +115,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   login_text: {
-    color: 'white',
+    color: 'black',
     fontSize: 16
   },
   error_text: {

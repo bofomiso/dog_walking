@@ -83,9 +83,25 @@ const AddDogScreen = ({navigation}) => {
                 .ref(imageName)
                 .getDownloadURL();
               console.log(url);
-              firestore()
+              // firestore()
+              //   .collection("Dogs")
+              //   .add({
+              //     user: user.uid,
+              //     name: values.name,
+              //     age: values.age,
+              //     breed: values.breed,
+              //     pictureUri: url,
+              //     totalWalks: 0,
+              //     totalDistance: 0.00,
+              //     createdAt: firestore.FieldValue.serverTimestamp(),
+              //   })
+              //   .then(() => {
+              //     console.log("Dog added!");
+              //   });
+                firestore()
                 .collection("Dogs")
-                .add({
+                .doc(`${user.uid}`+`${values.name}`)
+                .set({
                   user: user.uid,
                   name: values.name,
                   age: values.age,

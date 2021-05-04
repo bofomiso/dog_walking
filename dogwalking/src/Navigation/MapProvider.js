@@ -12,20 +12,29 @@ export const MapProvider = ({ children }) => {
         
       },
       createMap: async (locations, dogName, time, userId, currentDate, currentTime, day, distanceTraveled) => {
-              //make request to firebase
-              await firestore()
-              .collection("Walks")
-              .add({
-                user: userId,
-                name: dogName,
-                time: time,
-                locations: locations,
-                date: currentDate,
-                timeOfDay: currentTime,
-                dayOfWeek: day,
-                distance: distanceTraveled,
-                createdAt: firestore.FieldValue.serverTimestamp(),
-              })
+        const plusOne = firestore.FieldValue.increment(1);
+        await firestore()
+        .collection("Walks")
+        .add({
+          user: userId,
+          name: dogName,
+          time: time,
+          locations: locations,
+          date: currentDate,
+          timeOfDay: currentTime,
+          dayOfWeek: day,
+          distance: distanceTraveled,
+          createdAt: firestore.FieldValue.serverTimestamp(),
+        })
+        .then(() => {
+          firestore()
+            .collection("Dogs")
+            .doc(`${userId}`+`${dogName}`)
+            .update({
+              totalDistance: firestore.FieldValue.increment(Number(distanceTraveled.toFixed(2))),
+              totalWalks: firestore.FieldValue.increment(1),
+            })
+        })
       },
         }}
       >

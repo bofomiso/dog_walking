@@ -20,7 +20,8 @@ export default function Map() {
         longitudeDelta: 0.0333,
       }}
     >
-      <Polyline 
+      <Polyline
+        strokeColor='#fdd404'  
         coordinates={locations.map(loc => {
           const {latitude, longitude} = loc.coords;
           return {latitude, longitude}
