@@ -1,4 +1,4 @@
-import React, { useState,useContext, useCallback }  from "react";
+import React, { useState, useContext, useCallback }  from "react";
 import {
   View, 
   Text, 
@@ -52,10 +52,7 @@ const WalkingScreen = ({ navigation, route }) => {
         {err ? <Text> Please enable location services</Text> : null}
       </View>
       <Divider/>
-      {/* <View style={styles.dogText}>
-        <Distance/>
-      </View> */}
-      <WalkingButton dogName={route.params?.dog} />
+      <WalkingButton dogName={route.params?.dog} dogUid={route.params?.dogUid}/>
     </SafeAreaView>
   )
 }

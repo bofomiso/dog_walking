@@ -4,15 +4,10 @@ import firestore from "@react-native-firebase/firestore";
 export const MapContext = createContext();
 
 export const MapProvider = ({ children }) => {
-  const [map, setMap] = useState([]);
   return (
     <MapContext.Provider
     value={{
-      getMap: async () => {
-        
-      },
-      createMap: async (locations, dogName, time, userId, currentDate, currentTime, day, distanceTraveled) => {
-        const plusOne = firestore.FieldValue.increment(1);
+      createMap: async (locations, dogName, time, userId, currentDate, currentTime, day, distanceTraveled, dogUid) => {
         await firestore()
         .collection("Walks")
         .add({
@@ -29,7 +24,7 @@ export const MapProvider = ({ children }) => {
         .then(() => {
           firestore()
             .collection("Dogs")
-            .doc(`${userId}`+`${dogName}`)
+            .doc(`${dogUid}`+`${dogName}`)
             .update({
               totalDistance: firestore.FieldValue.increment(Number(distanceTraveled.toFixed(2))),
               totalWalks: firestore.FieldValue.increment(1),

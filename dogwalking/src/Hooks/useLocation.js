@@ -18,8 +18,6 @@ export default (tracking, callback) => {
             timeInterval: 1000, //1 second
             distanceInterval: 10 //10 meters
           }, 
-            //console.log(location);
-            //addLocation(location);
             callback
           );
           if (!granted) {

@@ -1,29 +1,25 @@
 import React, { useState,useContext } from 'react'
 import { 
-    StyleSheet, 
-    Text, 
-    View,
-    TouchableOpacity,
-    Alert 
+  StyleSheet, 
+  Text, 
+  View,
+  TouchableOpacity,
+  Alert 
 } from 'react-native'
 import { LocationContext } from "../Navigation/LocationProvider";
 import useSaveMap from "../Hooks/useSaveMap";
 import useTimer from "../Hooks/useTimer";
 import { dateHelper } from "../utils/Helpers";
-import { formattedTime } from "../utils//FormattedTime";
+import { formattedTime } from "../utils/FormattedTime";
 import Distance from "../components/Distance";
 
-export default function WalkingButton({ dogName }) {
+export default function WalkingButton({ dogName, dogUid }) {
   const { 
     startTracking, 
     stopTracking, 
-    recording, 
     setCurrentTime, 
     setCurrentDate, 
     setDay,
-    setLocations,
-    setPrevLatLng,
-    setDistanceTraveled,
   } = useContext(LocationContext);
   const [disableSave, setDisableSave] =  useState(true);
   const [disableStart, setDisableStart] = useState(false);
@@ -32,7 +28,7 @@ export default function WalkingButton({ dogName }) {
   const isDisabled = (isStart, isSave) => {
     setDisableStart(isStart);
     setDisableSave(isSave);
-  } 
+  }
   return (
     <>
       <View style={styles.stopWatchContainer}> 
@@ -41,23 +37,22 @@ export default function WalkingButton({ dogName }) {
       </View>
       <View style={styles.row}>
           <TouchableOpacity
-          style={[styles.circle, disableStart ? styles.disableButton : styles.circle]}
-          disabled={disableStart ? true : false}
-          onPress={() => {
-            if(typeof dogName == 'undefined') {
-              Alert.alert("You need to pick a dog before you can start a walk");
-            }
-            else{
-              isDisabled(true, false);
-              dateHelper(setCurrentDate, setCurrentTime, setDay);
-              startTracking();
-              handleStart();
-            }
-          }}
-            >
-              <Text style={styles.text}>Start</Text>
-            </TouchableOpacity>
-          {/* )} */}
+            style={[styles.circle, disableStart ? styles.disableButton : styles.circle]}
+            disabled={disableStart ? true : false}
+            onPress={() => {
+              if(typeof dogName == 'undefined') {
+                Alert.alert("You need to pick a dog before you can start a walk");
+              }
+              else{
+                isDisabled(true, false);
+                dateHelper(setCurrentDate, setCurrentTime, setDay);
+                startTracking();
+                handleStart();
+              }
+            }}
+          >
+            <Text style={styles.text}>Start</Text>
+          </TouchableOpacity>
           <TouchableOpacity 
             style={[styles.circle, disableSave ? styles.disableButton : styles.circle]} 
             disabled={disableSave? true : false}
@@ -68,7 +63,7 @@ export default function WalkingButton({ dogName }) {
               else{
                 isDisabled(false, true);
                 stopTracking();
-                saveMap(dogName, formattedTime(time));
+                saveMap(dogName, formattedTime(time), dogUid);
                 // setLocations([]);
                 // setPrevLatLng(0.00);
                 // setDistanceTraveled(0.00);
@@ -76,7 +71,7 @@ export default function WalkingButton({ dogName }) {
               }
             }}
           >
-            <Text style={styles.text}>Save Walk </Text>
+            <Text style={styles.text}>Save Walk</Text>
           </TouchableOpacity>
           </View>
       </>
@@ -107,7 +102,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'black',
-    fontSize: 15
+    fontSize: 12
   },
   row: {
     flex: 1,

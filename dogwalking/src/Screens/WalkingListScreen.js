@@ -15,18 +15,16 @@ const WalkingListScreen = ({ navigation }) => {
   function Walks() {
     const [walk, setWalk] = useState([]);
     const [dog, setDog] = useState([]);
-    const [pictureUri, setPictureUri] = useState([]);
-    var curDog;
+    const [pictureUri, setPictureUri] = useState(new Map());
     useEffect(() => {
       const subscriber = firestore()
       .collection("Walks")
       .where("user", "==", `${user.uid}`)
+      .orderBy("createdAt", "desc")
       .onSnapshot((querySnapshot) => {
         const walks = [];
         querySnapshot.forEach(documentSnapshot => {
-          //check for array later
-          // setDog(documentSnapshot.get("name").toString());
-          // setDog(dog => [...dog, documentSnapshot.get("name").toString()]);
+          //setDog(dog => [...dog, documentSnapshot.get("name").toString()]);
           walks.push({
             ...documentSnapshot.data(),
             key: documentSnapshot.id,
@@ -34,22 +32,24 @@ const WalkingListScreen = ({ navigation }) => {
         });
         setWalk(walks);
       });
+      // firestore()
+      //   .collection("Dogs")
+      //   .where("user", "==", `${user.uid}`)
+      //   .get()
+      //   .then(querySnapshot => {
+      //     querySnapshot.forEach(documentSnapshot => {
+      //       let tempMap = new Map(pictureUri);
+      //       tempMap[documentSnapshot.get("name")] = documentSnapshot.get("pictureUri");
+      //       // console.log(documentSnapshot.get("name"));
+      //       // console.log(tempMap);
+      //       // console.log(documentSnapshot.data());
+      //       setPictureUri(tempMap);
+      //     })
+      //   })
       return () => subscriber();
     }, []);
-    // for(let i = 0; i < dog.length; i++) {
-    //   console.log(i);
-    //   curDog = dog[i];
-    //   console.log(curDog);
-    //   firestore()
-    //   .collection("Dogs")
-    //   .where("user", "==", `${user.uid}`).where("name", "==", `${curDog}`)
-    //   .get()
-    //   .then(querySnapshot => {
-    //     querySnapshot.forEach(documentSnapshot => {
-    //       setPictureUri(pictureUri => [...pictureUri, documentSnapshot.get("pictureUri").toString()]);
-    //     })
-    //   })
-    // }
+    
+      console.log(pictureUri);
     return (
       <FlatList
         data={walk}
@@ -83,7 +83,7 @@ const WalkingListScreen = ({ navigation }) => {
                   </View>
                 </View>
               </View>
-              <Text>{pictureUri[index]}</Text>
+              {/* <Text>{pictureUri[index]}</Text> */}
             </TouchableOpacity>
           </View>
         )}

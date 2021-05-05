@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
   dayText: {
       fontSize: 30,
       marginBottom: '1%',
+      marginLeft: '1%',
       color: '#D1D8Df'
   },
   mapView: {
@@ -97,9 +98,11 @@ const styles = StyleSheet.create({
     width: 85,
     height: 85,
     borderRadius: 85/2,
+    marginLeft: '1%'
   },
   date: {
     marginTop: '1%',
+    marginLeft: '1%',
     color: '#D1D8Df'
   },
   row: {

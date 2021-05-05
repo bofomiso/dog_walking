@@ -9,13 +9,9 @@ import firestore from "@react-native-firebase/firestore";
 import Card from "../components/Card"
 import { AuthContext } from "../Navigation/AuthProvider";
 
-
-
 const WhichDogScreen = ({ navigation, route }) => {
   const [dogName, setDogName] =  useState();
   const { user } = useContext(AuthContext);
-  const [pictureUri, setPictureUri] = useState(null);
-
   const chooseDog = (dog) => {
     setDogName(dog);
   }; 
@@ -25,6 +21,7 @@ const WhichDogScreen = ({ navigation, route }) => {
       const subscriber = firestore()
         .collection("Dogs")
         .where("user", "==", `${user.uid}` )
+        .orderBy("createdAt", "asc")
         .onSnapshot((querySnapshot) => {
           const dogs = [];
           querySnapshot.forEach(documentSnapshot => {
@@ -48,6 +45,7 @@ const WhichDogScreen = ({ navigation, route }) => {
                 breed={item.breed}
                 pictureUri={item.pictureUri}
                 setDog={chooseDog}
+                dogUid={item.dogUid}
               >
               </Card>
           </View>

@@ -20,6 +20,7 @@ import { AuthContext } from "../Navigation/AuthProvider";
 import { Platform } from "react-native";
 import { DogBreeds } from "../utils/DogBreeds";
 import RNPickerSelect from 'react-native-picker-select';
+import uuid from "react-native-uuid";
 
 const AddSchema = yup.object({
   name: yup
@@ -37,6 +38,8 @@ const AddDogScreen = ({navigation}) => {
   const [imageSource, setImageSource] = useState(null);
   const { user } = useContext(AuthContext);
   const breeds = DogBreeds();
+  const dogUid = uuid.v4();
+  // console.log(dogUid);
 
   function selectImage() {
     let options = {
@@ -83,26 +86,12 @@ const AddDogScreen = ({navigation}) => {
                 .ref(imageName)
                 .getDownloadURL();
               console.log(url);
-              // firestore()
-              //   .collection("Dogs")
-              //   .add({
-              //     user: user.uid,
-              //     name: values.name,
-              //     age: values.age,
-              //     breed: values.breed,
-              //     pictureUri: url,
-              //     totalWalks: 0,
-              //     totalDistance: 0.00,
-              //     createdAt: firestore.FieldValue.serverTimestamp(),
-              //   })
-              //   .then(() => {
-              //     console.log("Dog added!");
-              //   });
                 firestore()
                 .collection("Dogs")
-                .doc(`${user.uid}`+`${values.name}`)
+                .doc(`${dogUid}`+`${values.name}`)
                 .set({
                   user: user.uid,
+                  dogUid: dogUid,
                   name: values.name,
                   age: values.age,
                   breed: values.breed,

@@ -16,7 +16,7 @@ export default function RecentWalk() {
       const subscriber = firestore()
       .collection("Walks")
       .where("user", "==", `${user.uid}`)
-      .orderBy("createdAt", 'desc')
+      .orderBy("createdAt", "desc")
       .limit(1)
       .onSnapshot((querySnapshot) => {
         const walk = [];

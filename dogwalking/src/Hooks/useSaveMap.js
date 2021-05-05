@@ -17,8 +17,8 @@ export default () => {
   } = useContext(LocationContext);
   const { user } = useContext(AuthContext);
 
-  const saveMap =  async (dogName, time) => {
-        await createMap(locations, dogName, time, user.uid, currentDate, currentTime, day, distanceTraveled);
+  const saveMap =  async (dogName, time, dogUid) => {
+        await createMap(locations, dogName, time, user.uid, currentDate, currentTime, day, distanceTraveled, dogUid);
         setLocations([]);
         setPrevLatLng(0.00);
         setDistanceTraveled(0.00);

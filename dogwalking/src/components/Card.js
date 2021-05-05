@@ -9,14 +9,14 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import FastImage from "react-native-fast-image";
 
-export default function Card({ name, age, breed, pictureUri, setDog }) {
+export default function Card({ name, age, breed, pictureUri, setDog, dogUid }) {
   const navigation = useNavigation();
   return (
     <View style={styles.card}> 
       <TouchableOpacity onPress={
         () => {
           setDog(name); 
-          navigation.navigate("Walking", { dog: name, pictureUri: pictureUri })}}>
+          navigation.navigate("Walking", { dog: name, pictureUri: pictureUri, dogUid: dogUid })}}>
         <View style={styles.cardContent}>
             <FastImage
               source={{ 

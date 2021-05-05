@@ -36,9 +36,6 @@ const HomeScreen = ({ navigation }) => {
         />
       </TouchableOpacity>
       <Divider/>
-      <TouchableOpacity onPress={() => logout()}>
-        <Text style={styles.text}> Logout </Text>
-      </TouchableOpacity>
     </SafeAreaView>
   )
 }

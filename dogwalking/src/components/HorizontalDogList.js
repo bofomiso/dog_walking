@@ -33,6 +33,7 @@ export default function HorizontalDogList() {
         const subscriber = firestore()
           .collection("Dogs")
           .where("user", "==", `${user.uid}`)
+          .orderBy("createdAt", "asc")
           .onSnapshot((querySnapshot) => {
             const dogs = [];
             querySnapshot.forEach(documentSnapshot => {
