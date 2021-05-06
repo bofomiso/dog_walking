@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Platform, Touchable, TouchableOpacity } from "react-native";
+import { Platform, TouchableOpacity } from "react-native";
 import { createNativeStackNavigator } from "react-native-screens/native-stack";
 import HomeScreen from "../Screens/HomeScreen";
 import AddDogScreen from "../Screens/AddDogScreen";
@@ -8,6 +8,7 @@ import WalkingDetailScreen from "../Screens/WalkingDetailsScreen";
 import DogProfileScreen from "../Screens/DogProfileScreen";
 import FeatherIcons from "react-native-vector-icons/Feather"
 import { AuthContext } from "../Navigation/AuthProvider";
+
 
 
 const Stack = createNativeStackNavigator();
@@ -23,7 +24,6 @@ export default function HomeStack() {
           headerStyle: {
             backgroundColor: '#303030'
           },
-          // headerTintColor: '#FFFF',
           headerTintColor: '#D1D8DF',
           headerRight: () => (
             <TouchableOpacity>
@@ -77,7 +77,7 @@ export default function HomeStack() {
           headerStyle: {
             backgroundColor: '#303030'
           },
-          headerTintColor: '#D1D8DF'
+          headerTintColor: '#D1D8DF',
         }}
       />
     </Stack.Navigator>

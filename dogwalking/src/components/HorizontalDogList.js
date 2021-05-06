@@ -61,7 +61,9 @@ export default function HorizontalDogList() {
                   breed: item.breed,
                   pictureUri: item.pictureUri,
                   totalDistance: item.totalDistance,
-                  totalWalks: item.totalWalks
+                  totalWalks: item.totalWalks,
+                  dogId: item.dogUid,
+                  userId: item.user
                 }
                 )}
               >

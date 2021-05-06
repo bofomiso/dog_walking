@@ -75,7 +75,7 @@ const AddDogScreen = ({navigation}) => {
         onSubmit={async(values) => {
           if(imageSource) {
             var uri = imageSource;
-            var imageName = user.uid + " " + values.name;
+            var imageName = dogUid + values.name;
             var uploadUri = Platform.OS === "ios" ? uri.replace("file://", '') : uri;
             await storage()
             .ref(imageName)
@@ -190,9 +190,11 @@ const AddDogScreen = ({navigation}) => {
                 <Text style={styles.errorText}> {props.touched.breed && props.errors.breed} </Text>
                 <TouchableOpacity 
                   style={styles.dogButton} 
-                  onPress={() => {props.handleSubmit()}}
+                  onPress={() => {
+                    props.handleSubmit(); 
+                    navigation.navigate("Home");
+                  }}
                 >
-                  {/* ; navigation.navigate("Home") */}
                   <Text style={styles.text}> Add Dog </Text>
                 </TouchableOpacity>
               </View>

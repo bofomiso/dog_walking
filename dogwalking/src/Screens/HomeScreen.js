@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#303030'
   },
   text: {
-    fontSize: 15,
+    fontSize: 20,
     marginTop: '1%',
     marginBottom: '1%',
     marginLeft: '1%',

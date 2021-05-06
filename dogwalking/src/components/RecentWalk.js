@@ -12,6 +12,7 @@ export default function RecentWalk() {
     const [recentWalk, setRecentWalk] = useState([]);
     const [pictureUri, setPictureUri] = useState(null);
     const [dog, setDog] = useState("");
+    // const [success, setSuccess] = useState(false);
     useEffect(() => {
       const subscriber = firestore()
       .collection("Walks")
@@ -21,6 +22,9 @@ export default function RecentWalk() {
       .onSnapshot((querySnapshot) => {
         const walk = [];
         querySnapshot.forEach(documentSnapshot => {
+          // if(documentSnapshot.exists) {
+          //   setSuccess(true);
+          // }
           setDog(documentSnapshot.get("name").toString());
           walk.push({
             ...documentSnapshot.data(),
@@ -40,6 +44,7 @@ export default function RecentWalk() {
           setPictureUri(documentSnapshot.get("pictureUri").toString());
         })
     })
+    // console.log(success)
   return (
       <View style={styles.card}>
         <View style={styles.cardContent}>

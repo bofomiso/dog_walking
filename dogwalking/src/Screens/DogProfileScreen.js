@@ -2,12 +2,15 @@ import React from "react";
 import { StyleSheet,
    Text, 
    View,
-   Image, 
+   Alert,
+   TouchableOpacity
 } from "react-native";
 import Divider from "../components/Divider";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import FastImage from "react-native-fast-image";
+import firestore from "@react-native-firebase/firestore";
+import storage from "@react-native-firebase/storage";
 
-const DogProfileScreen = ({ route }) => {
+const DogProfileScreen = ({ navigation,route }) => {
   const {
     name,
     age,
@@ -15,15 +18,17 @@ const DogProfileScreen = ({ route }) => {
     pictureUri,
     totalDistance,
     totalWalks,
+    dogId,
+    userId
   } = route.params;
-  const medal = () => {
-    
-  }
   return (
       <View style={styles.container}>
         <View style ={styles.pictureContainer}>
-          <Image
-            source={{ uri: pictureUri }}
+          <FastImage
+            source={{ 
+              uri: pictureUri,
+              priority: FastImage.priority.high  
+            }}
             style={styles.roundPicture}
           />
           <Text style={styles.nameText}>{name}</Text>
@@ -39,9 +44,6 @@ const DogProfileScreen = ({ route }) => {
         </View>
         <Divider/>
         <View style={styles.row}>
-        </View>
-        <Divider/>
-        <View style={styles.row}>
           <Text style={styles.text}>Total Distance: </Text>
           <Text style={styles.text}>{totalDistance}</Text>
         </View>
@@ -51,6 +53,48 @@ const DogProfileScreen = ({ route }) => {
           <Text style={styles.text}>{totalWalks}</Text>
         </View>
         <Divider/>
+        <View style={styles.deleteView}>
+          <TouchableOpacity 
+            style={styles.deleteButton}
+            onPress={() => {
+              Alert.alert(
+                `${name}`,
+                "Are you sure you want to delete " + `${name}` +
+                ". All his walks will be delete as well.",
+                [
+                  {
+                    text: "Cancel",
+                    style: "cancel"
+                  },
+                  {
+                    text: "Delete",
+                    onPress: async () =>
+                      await firestore()
+                      .collection('Dogs')
+                      .doc(`${dogId}`+`${name}`)
+                      .delete()
+                      .then(async () => {
+                        const collectionReference = await firestore()
+                          .collection("Walks")
+                          .where("user", "==", `${userId}`).where("name", "==", `${name}`)
+                          .get()
+                        const batch = firestore().batch()
+                        collectionReference.forEach(documentSnapshot => {
+                          batch.delete(documentSnapshot.ref);
+                        });
+                        await batch.commit();
+                        let picRef = storage().ref(`${dogId}`+`${name}`)
+                        picRef.delete();
+                        navigation.navigate("Home");
+                      }) 
+                  }
+                ]
+              )
+            }}
+          >
+            <Text style={styles.deleteText}>Delete Dog</Text>
+          </TouchableOpacity>
+        </View>
       </View>
   )
 }
@@ -88,6 +132,23 @@ const styles = StyleSheet.create({
     color: '#D1D8DF',
     fontSize: 20,
   },
+  deleteView: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    flex: 1,
+  },
+  deleteButton: {
+    width: 330,
+    backgroundColor: '#fdd404',
+    borderRadius: 25,
+    height: 50,
+    marginVertical: '10%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  deleteText: {
+    fontSize: 15,
+  }
 })
 
 export default DogProfileScreen
