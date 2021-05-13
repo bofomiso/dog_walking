@@ -2,55 +2,66 @@ import React, { useContext, useEffect, useState } from 'react'
 import { StyleSheet, 
   Text, 
   View, 
-  Image, 
 } from 'react-native'
 import firestore from "@react-native-firebase/firestore";
 import { AuthContext } from "../Navigation/AuthProvider";
+import { DogContext } from "../Navigation/DogProvider"
+import FastImage from "react-native-fast-image";
+import { DogBreeds } from '../utils/DogBreeds';
 
 export default function RecentWalk() {
   const { user } = useContext(AuthContext);
-    const [recentWalk, setRecentWalk] = useState([]);
-    const [pictureUri, setPictureUri] = useState(null);
-    const [dog, setDog] = useState("");
+  const [recentWalk, setRecentWalk] = useState([]);
+  const { userDogs } = useContext(DogContext);
+  const [pictureUri, setPictureUri] = useState(null);
+  const [dog, setDog] = useState("");
     // const [success, setSuccess] = useState(false);
-    useEffect(() => {
-      const subscriber = firestore()
-      .collection("Walks")
-      .where("user", "==", `${user.uid}`)
-      .orderBy("createdAt", "desc")
-      .limit(1)
-      .onSnapshot((querySnapshot) => {
-        const walk = [];
-        querySnapshot.forEach(documentSnapshot => {
-          // if(documentSnapshot.exists) {
-          //   setSuccess(true);
-          // }
-          setDog(documentSnapshot.get("name").toString());
-          walk.push({
-            ...documentSnapshot.data(),
-            key: documentSnapshot.id,
-          });
+  useEffect(() => {
+    const subscriber = firestore()
+    .collection("Walks")
+    .where("user", "==", `${user.uid}`)
+    .orderBy("createdAt", "desc")
+    .limit(1)
+    .onSnapshot((querySnapshot) => {
+      const walk = [];
+      querySnapshot.forEach(documentSnapshot => {
+        // if(documentSnapshot.exists) {
+        //   setSuccess(true);
+        // }
+        setDog(documentSnapshot.get("name").toString());
+        walk.push({
+          ...documentSnapshot.data(),
+          key: documentSnapshot.id,
         });
-        setRecentWalk(walk);
       });
-      return () => subscriber();
-    }, []);
-    firestore()
-      .collection("Dogs")
-      .where("user", "==", `${user.uid}`).where("name", "==", `${dog}`)
-      .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(documentSnapshot => {
-          setPictureUri(documentSnapshot.get("pictureUri").toString());
-        })
-    })
-    // console.log(success)
+      setRecentWalk(walk);
+    });
+    return () => subscriber();
+  }, []);
+    // firestore()
+    //   .collection("Dogs")
+    //   .where("user", "==", `${user.uid}`).where("name", "==", `${dog}`)
+    //   .get()
+    //   .then(querySnapshot => {
+    //     querySnapshot.forEach(documentSnapshot => {
+    //       setPictureUri(documentSnapshot.get("pictureUri").toString());
+    //     })
+    // })
+    let pic;
+    for(let i = 0; i < userDogs.length; i++) {
+      if(userDogs[i].name === dog) {
+        pic = userDogs[i].pictureUri;
+      }
+    }
   return (
       <View style={styles.card}>
         <View style={styles.cardContent}>
           <View>
-            <Image
-                source={{ uri: pictureUri }}
+            <FastImage
+                source={{ 
+                  uri: pic,
+                  priority: FastImage.priority.high
+                }}
                 style={styles.pictureContainer}
             />
             {recentWalk.map((item, key) => 

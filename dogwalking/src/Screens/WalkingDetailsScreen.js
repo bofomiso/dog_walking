@@ -1,9 +1,16 @@
 import React, { useContext, useState } from 'react'
-import { StyleSheet, Text, SafeAreaView, View, Image } from 'react-native'
+import { 
+  StyleSheet, 
+  Text, 
+  SafeAreaView, 
+  View, 
+  Image 
+} from 'react-native'
 import Divider from "../components/Divider";
 import MapView, { Polyline } from "react-native-maps";
 import firestore from "@react-native-firebase/firestore";
 import { AuthContext } from "../Navigation/AuthProvider";
+import FastImage from "react-native-fast-image";
 
 const WalkingDetailsScreen = ({ route }) => {
   const { name, day, locations, time, currentTime, date, distance } = route.params;
@@ -42,8 +49,11 @@ const WalkingDetailsScreen = ({ route }) => {
         </MapView>
         <Divider/>
         <View style={styles.details}>
-          <Image
-            source={{ uri: pictureUri }}
+          <FastImage
+            source={{ 
+              uri: pictureUri, 
+              priority: FastImage.priority.high
+            }}
             style={styles.pictureContainer}
           />
           <Text style={styles.nameText}> Name: {name} </Text>

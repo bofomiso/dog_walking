@@ -3,7 +3,6 @@ import {
   Text, 
   View,
   StyleSheet,
-  Image,
   TouchableOpacity
  } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -21,7 +20,7 @@ export default function Card({ name, age, breed, pictureUri, setDog, dogUid }) {
             <FastImage
               source={{ 
                 uri: pictureUri, 
-                priority: FastImage.priority.low
+                priority: FastImage.priority.high
               }}
               style={styles.pictureContainer}
             />

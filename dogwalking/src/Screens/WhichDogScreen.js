@@ -8,35 +8,38 @@ import {
 import firestore from "@react-native-firebase/firestore";
 import Card from "../components/Card"
 import { AuthContext } from "../Navigation/AuthProvider";
+import { DogContext } from "../Navigation/DogProvider";
 
 const WhichDogScreen = ({ navigation, route }) => {
   const [dogName, setDogName] =  useState();
   const { user } = useContext(AuthContext);
+  const { userDogs } = useContext(DogContext);
   const chooseDog = (dog) => {
     setDogName(dog);
   }; 
   function Dogs() {
-    const [dogs, setDogs] = useState([]);
-    useEffect(() => {
-      const subscriber = firestore()
-        .collection("Dogs")
-        .where("user", "==", `${user.uid}` )
-        .orderBy("createdAt", "asc")
-        .onSnapshot((querySnapshot) => {
-          const dogs = [];
-          querySnapshot.forEach(documentSnapshot => {
-            dogs.push({
-              ...documentSnapshot.data(),
-              key: documentSnapshot.id,
-            });
-          });
-          setDogs(dogs);
-        });
-      return () => subscriber();
-    }, []);
+    // const [dogs, setDogs] = useState([]);
+    // useEffect(() => {
+    //   const subscriber = firestore()
+    //     .collection("Dogs")
+    //     .where("user", "==", `${user.uid}` )
+    //     .orderBy("createdAt", "asc")
+    //     .onSnapshot((querySnapshot) => {
+    //       const dogs = [];
+    //       querySnapshot.forEach(documentSnapshot => {
+    //         dogs.push({
+    //           ...documentSnapshot.data(),
+    //           key: documentSnapshot.id,
+    //         });
+    //       });
+    //       setDogs(dogs);
+    //     });
+    //   return () => subscriber();
+    // }, []);
     return (
       <FlatList
-        data={dogs}
+        data={userDogs}
+        keyExtractor={item => item.dogUid}
         renderItem={({item}) => (
           <View>
               <Card

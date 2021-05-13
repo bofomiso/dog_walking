@@ -12,13 +12,12 @@ import useLocation from "../Hooks/useLocation";
 import{ useIsFocused } from "@react-navigation/native";
 import WalkingButton from "../components/WalkingButton";
 import Divider from "../components/Divider";
-import Distance from "../components/Distance";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import FastImage from "react-native-fast-image";
 
 const WalkingScreen = ({ navigation, route }) => {
   const isFocused = useIsFocused(); //keep track if screen is focused 
-  const { recording, addLocation, setDistanceTraveled, setPrevLatLng } = useContext(LocationContext);
+  const { recording, addLocation } = useContext(LocationContext);
   const callback = useCallback(location => {
     addLocation(location, recording);
   }, [recording]);

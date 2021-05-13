@@ -12,9 +12,6 @@ export default function Distance() {
   useEffect(() => {
       const interval = setInterval(() => {
           if(recording){
-              //removed distanceTraveled
-              //0.00 + haversine
-              // updated value + haversine
               if(locations.length > 0) {
                 setPrevLatLng({latitude: locations[locations.length-1].coords.latitude, longitude: locations[locations.length-1].coords.longitude });
                 setDistanceTraveled(distanceTraveled + haversine(prevLatLng, curLatLng, {unit: "mile"})|| 0);

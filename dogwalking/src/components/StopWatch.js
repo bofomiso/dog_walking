@@ -4,9 +4,6 @@ import {
     Text, 
     View, 
 } from "react-native";
-import { Stopwatch } from "react-native-stopwatch-timer";
-import { MapContext } from "../Navigation/MapProvider";
-import useTimer from "../Hooks/useTimer";
 
 export default function StopWatch({isStart, isReset, time }) {
   const formattedTime = (time) => {

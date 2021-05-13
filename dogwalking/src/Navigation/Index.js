@@ -1,17 +1,17 @@
 import React from "react";
 import { AuthProvider } from "./AuthProvider";
 import { LocationProvider } from "./LocationProvider";
-import { MapProvider } from "./MapProvider";
+import { DogProvider } from "./DogProvider";
 import Routes from "./Routes";
 
 export default function Providers() {
   return (
-    <MapProvider>
+    <DogProvider>
       <LocationProvider>
         <AuthProvider>
           <Routes />
         </AuthProvider>
       </LocationProvider>
-    </MapProvider>
+    </DogProvider>
   );
 }

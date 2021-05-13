@@ -9,7 +9,9 @@ import {
 } from "react-native"
 import firestore from "@react-native-firebase/firestore";
 import { AuthContext } from "../Navigation/AuthProvider";
+import { DogContext } from "../Navigation/DogProvider";
 import { useNavigation } from "@react-navigation/native";
+import FastImage from "react-native-fast-image";
 
 export default function HorizontalDogList() {
   renderHeader = () => {
@@ -28,8 +30,9 @@ export default function HorizontalDogList() {
   const { user } = useContext(AuthContext);
   const navigation = useNavigation();
   function DogsList() {
-      const [dogs, setDogs] = useState([]);
-      useEffect(() => {
+    const { setUserDogs } = useContext(DogContext);
+    const [dogs, setDogs] = useState([]);
+    useEffect(() => {
         const subscriber = firestore()
           .collection("Dogs")
           .where("user", "==", `${user.uid}`)
@@ -43,9 +46,12 @@ export default function HorizontalDogList() {
               });
             });
             setDogs(dogs);
+            setUserDogs(dogs);
           });
         return () => subscriber();
       }, []);
+      // console.log(dogs);
+      // console.log(userDogs)
       return (
         <FlatList
           data={dogs}
@@ -67,8 +73,11 @@ export default function HorizontalDogList() {
                 }
                 )}
               >
-                <Image
-                  source={{ uri: item.pictureUri }}
+                <FastImage
+                  source={{ 
+                    uri: item.pictureUri, 
+                    priority: FastImage.priority.high
+                  }}
                   style={styles.pictureContainer}
                 />
                 <Text style={styles.name}>{item.name}</Text>

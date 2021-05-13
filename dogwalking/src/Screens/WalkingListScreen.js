@@ -5,17 +5,19 @@ import {
   View,
   FlatList,
   TouchableOpacity,
-  Image,
 } from "react-native"
 import firestore from "@react-native-firebase/firestore";
 import { AuthContext } from "../Navigation/AuthProvider";
+import { DogContext } from "../Navigation/DogProvider"
+import FastImage from "react-native-fast-image";
 
 const WalkingListScreen = ({ navigation }) => {
   const { user } = useContext(AuthContext);
   function Walks() {
     const [walk, setWalk] = useState([]);
     const [dog, setDog] = useState([]);
-    const [pictureUri, setPictureUri] = useState(new Map());
+    const { userDogs } = useContext(DogContext);
+    const [pictureUri, setPictureUri] = useState([]);
     useEffect(() => {
       const subscriber = firestore()
       .collection("Walks")
@@ -37,23 +39,30 @@ const WalkingListScreen = ({ navigation }) => {
       //   .where("user", "==", `${user.uid}`)
       //   .get()
       //   .then(querySnapshot => {
-      //     querySnapshot.forEach(documentSnapshot => {
-      //       let tempMap = new Map(pictureUri);
-      //       tempMap[documentSnapshot.get("name")] = documentSnapshot.get("pictureUri");
-      //       // console.log(documentSnapshot.get("name"));
-      //       // console.log(tempMap);
-      //       // console.log(documentSnapshot.data());
-      //       setPictureUri(tempMap);
-      //     })
-      //   })
-      return () => subscriber();
-    }, []);
-    
-      console.log(pictureUri);
+        //     querySnapshot.forEach(documentSnapshot => {
+          //       let tempMap = new Map(pictureUri);
+          //       tempMap[documentSnapshot.get("name")] = documentSnapshot.get("pictureUri");
+          //       // console.log(documentSnapshot.get("name"));
+          //       // console.log(tempMap);
+          //       // console.log(documentSnapshot.data());
+          //       setPictureUri(tempMap);
+          //     })
+          //   })
+          return () => subscriber();
+        }, []);
+        let picUri = [];
+        for(let i = 0; i < walk.length; i++) {
+          for(let k = 0; k < userDogs.length; k++) {
+            if(walk[i].name === userDogs[k].name) {
+              picUri.push(userDogs[k].pictureUri);
+            }
+          }
+        }
+        // console.log(picUri);
     return (
       <FlatList
         data={walk}
-        extraData={pictureUri}
+        extraData={picUri}
         renderItem={({item, index}) => (
           <View>
             <TouchableOpacity onPress={
@@ -69,6 +78,15 @@ const WalkingListScreen = ({ navigation }) => {
               })}>
               <View style={styles.card}>
                 <View style={styles.cardContent}>
+                  <View>
+                    <FastImage
+                      source={{
+                        uri: picUri[index],
+                        priority: FastImage.priority.high
+                      }}
+                      style={styles.pictureContainer}
+                    />
+                  </View>
                   <View style={styles.container}>
                     <Text style={styles.underline}>Name</Text>
                     <Text style={styles.textColor}>{item.name}</Text>

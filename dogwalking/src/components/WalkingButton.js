@@ -7,24 +7,31 @@ import {
   Alert 
 } from 'react-native'
 import { LocationContext } from "../Navigation/LocationProvider";
-import useSaveMap from "../Hooks/useSaveMap";
+import { AuthContext } from "../Navigation/AuthProvider";
 import useTimer from "../Hooks/useTimer";
 import { dateHelper } from "../utils/Helpers";
 import { formattedTime } from "../utils/FormattedTime";
 import Distance from "../components/Distance";
+import { useNavigation } from "@react-navigation/native";
+
 
 export default function WalkingButton({ dogName, dogUid }) {
+  const { user } = useContext(AuthContext);
+  const navigation = useNavigation();
+
   const { 
     startTracking, 
     stopTracking, 
     setCurrentTime, 
     setCurrentDate, 
     setDay,
+    saveMap,
+    resetValues
   } = useContext(LocationContext);
   const [disableSave, setDisableSave] =  useState(true);
   const [disableStart, setDisableStart] = useState(false);
   const { time, handleStart, handlePause, handleResume, handleReset, } = useTimer();
-  const [saveMap] = useSaveMap();
+  // const [saveMap] = useSaveMap();
   const isDisabled = (isStart, isSave) => {
     setDisableStart(isStart);
     setDisableSave(isSave);
@@ -63,11 +70,13 @@ export default function WalkingButton({ dogName, dogUid }) {
               else{
                 isDisabled(false, true);
                 stopTracking();
-                saveMap(dogName, formattedTime(time), dogUid);
+                saveMap(dogName, formattedTime(time), dogUid, user.uid);
                 // setLocations([]);
                 // setPrevLatLng(0.00);
                 // setDistanceTraveled(0.00);
                 handleReset();
+                resetValues();
+                navigation.setParams({dog: null, pictureUri: undefined})
               }
             }}
           >

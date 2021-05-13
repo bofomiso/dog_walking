@@ -14,7 +14,6 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 const HomeScreen = ({ navigation }) => {
   const { logout } = useContext(AuthContext);
-
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.dogsText}>Your dogs</Text>

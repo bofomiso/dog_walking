@@ -21,6 +21,7 @@ import { Platform } from "react-native";
 import { DogBreeds } from "../utils/DogBreeds";
 import RNPickerSelect from 'react-native-picker-select';
 import uuid from "react-native-uuid";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const AddSchema = yup.object({
   name: yup
@@ -39,7 +40,15 @@ const AddDogScreen = ({navigation}) => {
   const { user } = useContext(AuthContext);
   const breeds = DogBreeds();
   const dogUid = uuid.v4();
-  // console.log(dogUid);
+
+  // const dogCreation = async (value) => {
+  //   try {
+  //     await AsyncStorage.setItem("@dogKey", value)
+  //   }
+  //   catch (e) {
+  //     console.log(e);
+  //   }
+  // }
 
   function selectImage() {
     let options = {
@@ -101,7 +110,9 @@ const AddDogScreen = ({navigation}) => {
                   createdAt: firestore.FieldValue.serverTimestamp(),
                 })
                 .then(() => {
-                  console.log("Dog added!");
+                  console.log("Dog added!");                  
+                    // console.log(created[1].createdAt);
+                  // dogCreation(dogCreated);
                 });
             })
           }
@@ -117,6 +128,9 @@ const AddDogScreen = ({navigation}) => {
                 age: values.age,
                 breed: values.breed,
                 pictureUri: uri,
+                totalWalks: 0,
+                totalDistance: 0.00,
+                createdAt: firestore.FieldValue.serverTimestamp(),
               })
               .then(() => {
                 console.log("Dog added!");

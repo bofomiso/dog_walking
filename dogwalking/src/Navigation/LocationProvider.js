@@ -1,5 +1,5 @@
-import React, { createContext, useState } from "react";
-import haversine from "haversine";
+import React, { createContext, useState, useContext } from "react";
+import firestore from "@react-native-firebase/firestore";
 
 export const LocationContext = createContext();
 
@@ -41,14 +41,40 @@ export const LocationProvider = ({ children }) => {
             setCurLatLng({latitude: location.coords.latitude, longitude: location.coords.longitude})
           }
         },
-        calcDistance: () => {
-          setDistanceTraveled(distanceTraveled + haversine(prevLatLng, curLatLng, {unit: "mile"}) || 0);
-        },
         startTracking: () => {
           setRecording(true);
         },
         stopTracking: () => {
           setRecording(false);
+        },
+        saveMap: async (dogName, time, dogUid, userUid) => {
+          await firestore()
+          .collection("Walks")
+          .add({
+            dogUid: dogUid,
+            user: userUid,
+            name: dogName,
+            time: time,
+            locations: locations,
+            date: currentDate,
+            timeOfDay: currentTime,
+            dayOfWeek: day,
+            distance: distanceTraveled,
+            createdAt: firestore.FieldValue.serverTimestamp(),
+          })
+          .then(() => {
+            firestore().collection("Dogs")
+            .doc(`${dogUid}`+`${dogName}`)
+            .update({
+              totalDistance: firestore.FieldValue.increment(Number(distanceTraveled.toFixed(2))),
+              totalWalks: firestore.FieldValue.increment(1),
+            })
+          })
+        },
+        resetValues: () => {
+          setLocations([]);
+          setPrevLatLng(0.00);
+          setDistanceTraveled(0.00);
         }
       }}
     >
